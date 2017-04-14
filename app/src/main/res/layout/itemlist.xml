@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/itemid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="物料编号"
+        tools:layout_editor_absoluteX="102dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="物料编号："
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:id="@+id/itembc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="批次ID"
+        tools:layout_editor_absoluteX="94dp"
+        tools:layout_editor_absoluteY="41dp" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="批次ID："
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="41dp" />
+
+    <TextView
+        android:id="@+id/itemseri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="序列号"
+        tools:layout_editor_absoluteX="238dp"
+        tools:layout_editor_absoluteY="41dp" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="序列号："
+        tools:layout_editor_absoluteX="179dp"
+        tools:layout_editor_absoluteY="41dp" />
+
+    <TextView
+        android:id="@+id/itemqlty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="质量"
+        tools:layout_editor_absoluteX="67dp"
+        tools:layout_editor_absoluteY="73dp" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="质量："
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="73dp" />
+
+    <TextView
+        android:id="@+id/itemtol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="公差"
+        tools:layout_editor_absoluteX="151dp"
+        tools:layout_editor_absoluteY="73dp" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="公差："
+        tools:layout_editor_absoluteX="109dp"
+        tools:layout_editor_absoluteY="73dp" />
+
+    <TextView
+        android:id="@+id/itemqty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="数量"
+        tools:layout_editor_absoluteX="67dp"
+        tools:layout_editor_absoluteY="98dp" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="数量："
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="98dp" />
+
+    <TextView
+        android:id="@+id/itemwt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="重量"
+        tools:layout_editor_absoluteX="151dp"
+        tools:layout_editor_absoluteY="98dp" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="重量："
+        tools:layout_editor_absoluteX="109dp"
+        tools:layout_editor_absoluteY="98dp" />
+
+    <TextView
+        android:id="@+id/itemst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="仓库"
+        tools:layout_editor_absoluteX="238dp"
+        tools:layout_editor_absoluteY="73dp" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="仓库："
+        tools:layout_editor_absoluteX="187dp"
+        tools:layout_editor_absoluteY="73dp" />
+
+    <TextView
+        android:id="@+id/itemslc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="库位"
+        tools:layout_editor_absoluteX="238dp"
+        tools:layout_editor_absoluteY="98dp" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="库位："
+        tools:layout_editor_absoluteX="189dp"
+        tools:layout_editor_absoluteY="98dp" />
+
+    <Button
+        android:id="@+id/split"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="拆包"
+        tools:layout_editor_absoluteX="280dp"
+        tools:layout_editor_absoluteY="73dp" />
+</android.support.constraint.ConstraintLayout>
