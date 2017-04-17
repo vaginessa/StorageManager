@@ -32,7 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="20"
-            android:text="" />
+            android:singleLine="true"
+            />
 
         <Button
             android:id="@+id/search"
@@ -40,6 +41,27 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="读取" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="拆包条码：" />
+
+        <EditText
+            android:id="@+id/itemstr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:singleLine="true"
+            />
+
     </LinearLayout>
     <ListView
         android:id="@+id/itemlist"

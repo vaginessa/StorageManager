@@ -14,6 +14,7 @@ import gesac.com.splitbag.model.IBag;
 import gesac.com.splitbag.view.ISplitView;
 
 import zpSDK.zpSDK.zpSDK;
+
 /**
  * Created by GE11522 on 2017/4/14.
  */
@@ -32,7 +33,7 @@ public class SplitPresenterCompl implements ISplitPresenter {
         SelectedBDAddress = new String();
     }
 
-    public void subString(String str) {
+    public IBag subString(String str) {
         String[] sourceStrArray = str.split(",,");
         Log.i("message", "subString: " + sourceStrArray.length);
         try {
@@ -42,10 +43,11 @@ public class SplitPresenterCompl implements ISplitPresenter {
         } catch (ArrayIndexOutOfBoundsException e) {
             Log.i("message", "subString: " + e.toString());
             iSplitView.clearEdt();
-            return;
+            return null;
         }
         Log.i("message", "continuing");
         iSplitView.fillEdt(iBag);
+        return iBag;
     }
 
     public Boolean finBDAddress() {
@@ -102,18 +104,16 @@ public class SplitPresenterCompl implements ISplitPresenter {
         }
         iSplitView.closeStatbox();
         iSplitView.showStatbox("正在打印...");
-        if (!zpSDK.zp_page_create(80, 35)) { //70,30
+        if (!zpSDK.zp_page_create(80, 34.4)) { //70,30
             iSplitView.showToast("创建打印页面失败");
             iSplitView.closeStatbox();
             return;
         }
 
         zpSDK.TextPosWinStyle = false;
-        zpSDK.zp_draw_text_ex(13, 2, iBag.getPctid().substring(1), "黑体", 2.2, 0, true, false, false);
-        zpSDK.zp_draw_text_ex(13, 4.2, iBag.getPctbc(), "黑体", 2.2, 0, true, false, false);
-
-//        zpSDK.zp_draw_text_ex(13, 8.6, spctbc, "黑体", 3.4, 0, true, false, false);
-        zpSDK.zp_draw_text_ex(15, 15, divnum, "黑体", 6.0, 0, true, false, false);
+        zpSDK.zp_draw_text_ex(2, 2.5, iBag.getPctid().substring(1), "黑体", 3, 0, true, false, false);
+        zpSDK.zp_draw_text_ex(40, 2.5, iBag.getPctbc(), "黑体", 3, 0, true, false, false);
+        zpSDK.zp_draw_text_ex(25, 15, divnum, "黑体", 6.0, 0, true, false, false);
         zpSDK.zp_draw_barcode2d(45, 20, str, zpSDK.BARCODE2D_TYPE.BARCODE2D_DATAMATRIX, 3, 3, 90);
 
         zpSDK.zp_page_print(false);

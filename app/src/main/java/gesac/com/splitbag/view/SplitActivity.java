@@ -14,13 +14,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
-import gesac.com.dividepackage.R;
+import gesac.com.R;
 import gesac.com.splitbag.model.IBag;
 import gesac.com.splitbag.presenter.ISplitPresenter;
 import gesac.com.splitbag.presenter.SplitPresenterCompl;
 import gesac.com.uitity.StatusBox;
 
-public class SplitActivity extends AppCompatActivity implements ISplitView {
+public class SplitActivity extends AppCompatActivity implements ISplitView{
     private EditText ecode, epctid, epctbc, epcthv, epctnum, epctdinum;
     private String spctnum = "", spctdinum = "";
     private Button bprint;
@@ -32,9 +32,9 @@ public class SplitActivity extends AppCompatActivity implements ISplitView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_split);
         bindView();
-        iSplitPresenter = new SplitPresenterCompl(this);
+//        iSplitPresenter = new SplitPresenterCompl(this);
     }
 
     private void bindView() {
@@ -84,9 +84,9 @@ public class SplitActivity extends AppCompatActivity implements ISplitView {
         if (keyCode == KeyEvent.KEYCODE_F8) {
             ecode.requestFocus();
             ecode.selectAll();
-            return true;
+            return super.onKeyUp(keyCode, event);
         }
-        return false;
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class SplitActivity extends AppCompatActivity implements ISplitView {
             codestr = ecode.getText().toString();
             Log.i("message", "onKeyDown: " + codestr);
             iSplitPresenter.subString(codestr);
-            return true;
+            return super.onKeyUp(keyCode, event);
         }
         return super.onKeyUp(keyCode, event);
     }
@@ -155,4 +155,6 @@ public class SplitActivity extends AppCompatActivity implements ISplitView {
     public void openBluetooth(Intent it) {
         startActivityForResult(it, 2);
     }
+
+
 }

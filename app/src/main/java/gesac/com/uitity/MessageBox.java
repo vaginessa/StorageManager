@@ -9,7 +9,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
-import gesac.com.dividepackage.R;
+import gesac.com.R;
+
 
 public class MessageBox extends Dialog  {
 
@@ -27,7 +28,7 @@ public class MessageBox extends Dialog  {
 	
     public void onCreate() 
     {
-        setContentView(R.layout.messagebox);  
+        setContentView(R.layout.messagebox);
         findViewById(R.id.btnCancel).setOnClickListener(new View.OnClickListener() {
         		@Override  
         		public void onClick(View paramView)  

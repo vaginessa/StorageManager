@@ -1,4 +1,4 @@
-package gesac.com.dividepackage;
+package gesac.com;
 
 import org.junit.Test;
 

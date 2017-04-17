@@ -14,7 +14,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import gesac.com.dividepackage.R;
+import gesac.com.R;
+
 
 public class StatusBox {
 	View dialogView;
