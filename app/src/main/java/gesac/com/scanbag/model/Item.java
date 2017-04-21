@@ -6,7 +6,7 @@ package gesac.com.scanbag.model;
 
 public class Item {
     String itemid,itemqlty,itemtol,itembc,itemseri,itemqty,itemwt,itemst,itemslc;
-
+    int isin;
     public Item(String itemid, String itemqlty, String itemtol, String itembc, String itemseri, String itemqty, String itemwt, String itemst, String itemslc) {
         this.itemid = itemid;
         this.itemqlty = itemqlty;
@@ -17,6 +17,7 @@ public class Item {
         this.itemwt = itemwt;
         this.itemst = itemst;
         this.itemslc = itemslc;
+        isin = 0;
     }
 
     public Item() {
@@ -92,5 +93,13 @@ public class Item {
 
     public void setItemslc(String itemslc) {
         this.itemslc = itemslc;
+    }
+
+    public int getIsin() {
+        return isin;
+    }
+
+    public void setIsin(int isin) {
+        this.isin = isin;
     }
 }

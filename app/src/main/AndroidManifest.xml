@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,7 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".splitbag.view.SplitActivity"></activity>
+        <activity android:name=".splitbag.view.SplitActivity" />
+        <activity android:name=".scanbag.view.ItemActivity"></activity>
     </application>
 
 </manifest>

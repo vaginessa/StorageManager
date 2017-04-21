@@ -34,7 +34,7 @@ public class SplitActivity extends AppCompatActivity implements ISplitView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_split);
         bindView();
-//        iSplitPresenter = new SplitPresenterCompl(this);
+        iSplitPresenter = new SplitPresenterCompl(this);
     }
 
     private void bindView() {

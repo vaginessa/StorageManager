@@ -24,8 +24,8 @@ public class ItemAdapter extends BaseAdapter {
 
     public ItemAdapter(Context context, List<Item> itemlist) {
         this.itemlist = itemlist;
-        mInflater = LayoutInflater.from(context);
         this.context = context;
+        mInflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -43,11 +43,8 @@ public class ItemAdapter extends BaseAdapter {
         return position;
     }
 
-    public void changeItemColor(int position){
 
-    }
-
-    class ViewHold{
+    class ViewHold {
         TextView idView, bcView, seriView, qltyView, tolView, qtyView, wtView, stView, slcView;
         Button splitBt;
     }
@@ -82,13 +79,16 @@ public class ItemAdapter extends BaseAdapter {
         hold.wtView.setText(itemlist.get(position).getItemwt());
         hold.stView.setText(itemlist.get(position).getItemst());
         hold.slcView.setText(itemlist.get(position).getItemslc());
+        if (itemlist.get(position).getIsin() != 0) {
+            hold.splitBt.setEnabled(true);
+            hold.splitBt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //TODO 拆包操作
+                }
+            });
+        } else hold.splitBt.setEnabled(false);
 
-        hold.splitBt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO 拆包操作
-            }
-        });
 
         return convertView;
     }

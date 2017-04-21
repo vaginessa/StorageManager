@@ -7,7 +7,7 @@ import java.util.List;
  */
 
 public interface IJournal {
-    boolean setJourid();
+    boolean setJourid(String jourid);
     boolean setItemlist(List<Item> items);
 
     String getJourid();

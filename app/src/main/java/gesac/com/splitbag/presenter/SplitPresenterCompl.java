@@ -9,7 +9,7 @@ import android.util.Log;
 
 import java.util.Set;
 
-import gesac.com.splitbag.model.BagModel;
+import gesac.com.splitbag.model.Bag;
 import gesac.com.splitbag.model.IBag;
 import gesac.com.splitbag.view.ISplitView;
 
@@ -35,9 +35,8 @@ public class SplitPresenterCompl implements ISplitPresenter {
 
     public IBag subString(String str) {
         String[] sourceStrArray = str.split(",,");
-        Log.i("message", "subString: " + sourceStrArray.length);
         try {
-            iBag = new BagModel(sourceStrArray[0], sourceStrArray[1], sourceStrArray[2], sourceStrArray[3],
+            iBag = new Bag(sourceStrArray[0], sourceStrArray[1], sourceStrArray[2], sourceStrArray[3],
                     String.valueOf((int) Math.round(Double.parseDouble(sourceStrArray[5]))),
                     sourceStrArray[6]);
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -45,7 +44,6 @@ public class SplitPresenterCompl implements ISplitPresenter {
             iSplitView.clearEdt();
             return null;
         }
-        Log.i("message", "continuing");
         iSplitView.fillEdt(iBag);
         return iBag;
     }
@@ -133,7 +131,7 @@ public class SplitPresenterCompl implements ISplitPresenter {
     @Override
     public String initCode(String divnum) {
         String str = new String();
-        str = iBag.getPctid() + ",," + iBag.getPcttol() + ",," + iBag.getPctqlty() + ",," + iBag.getPctbc() + ",,,," + iBag.getPctqty()
+        str = iBag.getPctid() + ",," + iBag.getPcttol() + ",," + iBag.getPctqlty() + ",," + iBag.getPctbc() + ",,,," + divnum
                 + ".0000,," + iBag.getPcthv();
         return str;
     }

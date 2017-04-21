@@ -8,24 +8,29 @@
     android:gravity="center"
     tools:context="gesac.com.HomeActivity">
 
+
+
     <Button
         android:id="@+id/scan_home"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="拣包程序"/>
-    <Button
-        android:id="@+id/split_home"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="拆包程序"/>
-    <Button
-        android:id="@+id/testbt"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="test"/>
-    <TextView
+
+        <Button
+            android:id="@+id/split_home"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="拆包程序" />
+
+        <Button
+            android:id="@+id/testbt"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="test" />
+
+        <TextView
         android:id="@+id/testtv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

@@ -1,5 +1,7 @@
 package gesac.com.scanbag.presenter;
 
+import java.util.List;
+
 import gesac.com.scanbag.model.IJournal;
 import gesac.com.scanbag.model.Item;
 import gesac.com.scanbag.model.Journal;
@@ -13,5 +15,5 @@ public interface IScanPresenter {
 
     boolean doCheck(Item item);
     void doScan();
-    boolean isInJour(IBag iBag, IJournal ijournal);
+    List<IJournal> getERPinfo(String jourid);
 }

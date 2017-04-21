@@ -4,10 +4,10 @@ package gesac.com.splitbag.model;
  * Created by GE11522 on 2017/4/14.
  */
 
-public class BagModel implements IBag {
+public class Bag implements IBag {
     String pctid, pcttol, pctqlty, pctbc, pctqty, pcthv;
 
-    public BagModel(String pctid, String pcttol, String pctqlty, String pctbc, String pctqty, String pcthv) {
+    public Bag(String pctid, String pcttol, String pctqlty, String pctbc, String pctqty, String pcthv) {
         this.pctid = pctid;
         this.pcttol = pcttol;
         this.pctqlty = pctqlty;

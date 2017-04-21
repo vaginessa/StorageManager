@@ -5,5 +5,5 @@ package gesac.com.scanbag.view;
  */
 
 public interface IScanView {
-
+    void showAlert(String msg);
 }
