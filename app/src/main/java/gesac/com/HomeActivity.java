@@ -70,102 +70,102 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        testbt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //启动后台异步线程进行连接webService操作，并且根据返回结果在主线程中改变UI
-                QueryAddressTask queryAddressTask = new QueryAddressTask();
-                //启动后台任务
-                queryAddressTask.execute("*000511");
-                LoadDialog.showDialog(HomeActivity.this);
-            }
-        });
+//        testbt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //启动后台异步线程进行连接webService操作，并且根据返回结果在主线程中改变UI
+//                QueryAddressTask queryAddressTask = new QueryAddressTask();
+//                //启动后台任务
+//                queryAddressTask.execute("*000511");
+//                LoadDialog.showDialog(HomeActivity.this,"");
+//            }
+//        });
     }
 
-    class QueryAddressTask extends AsyncTask<String, Integer, String> {
-        @Override
-        protected String doInBackground(String... params) {
-            String result = "";
-            try {
-                result = getERPinfo(params[0]);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            //将结果返回给onPostExecute方法
-            return result;
-        }
-
-        @Override
-        //此方法可以在主线程改变UI
-        protected void onPostExecute(String result) {
-            // 将WebService返回的结果显示在TextView中
-            testtv.setText(result);
-            LoadDialog.cancelDialog();
-        }
-    }
-
-    public String getERPinfo(String jourid) {
-        List<IJournal> iJournals = new ArrayList<>();
-        List<Item> items = new ArrayList<>();
-        String WSDL_URI = "http://10.2.2.67:8099/JournalService.asmx?WSDL";//wsdl 的uri
-        String namespace = "http://tempuri.org/";//namespace
-        String methodName = "GetProdJournalBOM";//要调用的方法名称
-
-        SoapObject request = new SoapObject(namespace, methodName);
-//         设置需调用WebService接口需要传入的两个参数mobileCode、userId
-        request.addProperty("journalId", jourid);
-        request.addProperty("dataAreaId", "ge");
-//        request.addProperty("UserName", "ge11522");
-//        request.addProperty("PassWord", "Hhl002636");
-
-
-        //创建SoapSerializationEnvelope 对象，同时指定soap版本号(之前在wsdl中看到的)
-        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapSerializationEnvelope.VER12);
-        envelope.bodyOut = request;//由于是发送请求，所以是设置bodyOut
-        envelope.dotNet = true;//由于是.net开发的webservice，所以这里要设置为true
-
-        HttpTransportSE httpTransportSE = new HttpTransportSE(WSDL_URI);
-        try {
-            httpTransportSE.call(null, envelope);//调用
-        } catch (SocketTimeoutException e){
-            Toast.makeText(this, "获取时间超时", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        }
-
-        // 获取返回的数据
-        SoapObject object = (SoapObject) ((SoapObject) envelope.bodyIn).getProperty(0);
-        // 获取返回的结果
-
-//        SoapObject item = (SoapObject) itemlist.getPrimitiveProperty("items");
-        for (int i = 0; i < object.getPropertyCount(); i++) {
-            SoapObject jourlist = (SoapObject) object.getProperty(i);
-            SoapObject itemlist = (SoapObject) jourlist.getProperty("items");
-            for (int j = 0; j < itemlist.getPropertyCount(); j++) {
-                SoapObject item = (SoapObject) itemlist.getProperty(j);
-                items.add(new Item(item.getProperty("itemid").toString(),
-                        item.getProperty("itemqlty").toString(),
-                        item.getProperty("itemtol").toString(),
-                        item.getProperty("itembc").toString(),
-                        item.getProperty("itemseri").toString(),
-                        item.getProperty("itemqty").toString(),
-                        item.getProperty("itemwt").toString(),
-                        item.getProperty("itemst").toString(),
-                        item.getProperty("itemslc").toString()));
-            }
-            iJournals.add(new Journal(jourlist.getProperty("jourid").toString(),items));
-            items.clear();
-            Log.d("debug", String.valueOf(iJournals.get(i).getJourid()));
-        }
-//        String result = jourlist.getProperty(0).toString();
-
-//        Log.d("debug", String.valueOf(iJournals.get(0).getJourid()));
-
-        return "";
-    }
+//    class QueryAddressTask extends AsyncTask<String, Integer, String> {
+//        @Override
+//        protected String doInBackground(String... params) {
+//            String result = "";
+//            try {
+//                result = getERPinfo(params[0]);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            //将结果返回给onPostExecute方法
+//            return result;
+//        }
+//
+//        @Override
+//        //此方法可以在主线程改变UI
+//        protected void onPostExecute(String result) {
+//            // 将WebService返回的结果显示在TextView中
+//            testtv.setText(result);
+//            LoadDialog.cancelDialog();
+//        }
+//    }
+//
+//    public String getERPinfo(String jourid) {
+//        List<IJournal> iJournals = new ArrayList<>();
+//        List<Item> items = new ArrayList<>();
+//        String WSDL_URI = "http://10.2.2.67:8099/JournalService.asmx?WSDL";//wsdl 的uri
+//        String namespace = "http://tempuri.org/";//namespace
+//        String methodName = "GetProdJournalBOM";//要调用的方法名称
+//
+//        SoapObject request = new SoapObject(namespace, methodName);
+////         设置需调用WebService接口需要传入的两个参数mobileCode、userId
+//        request.addProperty("journalId", jourid);
+//        request.addProperty("dataAreaId", "ge");
+////        request.addProperty("UserName", "ge11522");
+////        request.addProperty("PassWord", "Hhl002636");
+//
+//
+//        //创建SoapSerializationEnvelope 对象，同时指定soap版本号(之前在wsdl中看到的)
+//        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapSerializationEnvelope.VER12);
+//        envelope.bodyOut = request;//由于是发送请求，所以是设置bodyOut
+//        envelope.dotNet = true;//由于是.net开发的webservice，所以这里要设置为true
+//
+//        HttpTransportSE httpTransportSE = new HttpTransportSE(WSDL_URI);
+//        try {
+//            httpTransportSE.call(null, envelope);//调用
+//        } catch (SocketTimeoutException e){
+//            Toast.makeText(this, "获取时间超时", Toast.LENGTH_SHORT).show();
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (XmlPullParserException e) {
+//            e.printStackTrace();
+//        }
+//
+//        // 获取返回的数据
+//        SoapObject object = (SoapObject) ((SoapObject) envelope.bodyIn).getProperty(0);
+//        // 获取返回的结果
+//
+////        SoapObject item = (SoapObject) itemlist.getPrimitiveProperty("items");
+//        for (int i = 0; i < object.getPropertyCount(); i++) {
+//            SoapObject jourlist = (SoapObject) object.getProperty(i);
+//            SoapObject itemlist = (SoapObject) jourlist.getProperty("items");
+//            for (int j = 0; j < itemlist.getPropertyCount(); j++) {
+//                SoapObject item = (SoapObject) itemlist.getProperty(j);
+//                items.add(new Item(item.getProperty("itemid").toString(),
+//                        item.getProperty("itemqlty").toString(),
+//                        item.getProperty("itemtol").toString(),
+//                        item.getProperty("itembc").toString(),
+//                        item.getProperty("itemseri").toString(),
+//                        item.getProperty("itemqty").toString(),
+//                        item.getProperty("itemwt").toString(),
+//                        item.getProperty("itemst").toString(),
+//                        item.getProperty("itemslc").toString()));
+//            }
+//            iJournals.add(new Journal(jourlist.getProperty("jourid").toString(),items));
+//            items.clear();
+//            Log.d("debug", String.valueOf(iJournals.get(i).getJourid()));
+//        }
+////        String result = jourlist.getProperty(0).toString();
+//
+////        Log.d("debug", String.valueOf(iJournals.get(0).getJourid()));
+//
+//        return "";
+//    }
 
 //    interface initRetrof{
 //        @GET("XTC_JournalTrans_Service")

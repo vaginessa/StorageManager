@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -14,18 +15,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import com.google.gson.Gson;
+
 import gesac.com.R;
+import gesac.com.scanbag.model.Item;
 import gesac.com.splitbag.model.IBag;
 import gesac.com.splitbag.presenter.ISplitPresenter;
 import gesac.com.splitbag.presenter.SplitPresenterCompl;
 import gesac.com.uitity.StatusBox;
 
-public class SplitActivity extends AppCompatActivity implements ISplitView{
+public class SplitActivity extends AppCompatActivity implements ISplitView {
     private EditText ecode, epctid, epctbc, epcthv, epctnum, epctdinum;
     private String spctnum = "", spctdinum = "";
     private Button bprint;
-    private String codestr;
 
+    private String codestr;
     StatusBox statusBox;
     ISplitPresenter iSplitPresenter;
 
@@ -48,13 +52,8 @@ public class SplitActivity extends AppCompatActivity implements ISplitView{
         bprint = (Button) findViewById(R.id.print);
         statusBox = new StatusBox(this, bprint);
 
-        ecode.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                closeInputMethod();
-                return false;
-            }
-        });
+        ecode.setInputType(InputType.TYPE_NULL);
+
 
         epctdinum.setOnKeyListener(new View.OnKeyListener() {
             @Override

@@ -44,7 +44,6 @@ public class ScanActivity extends AppCompatActivity implements IScanView {
     }
 
 
-
     private void bindViews() {
         mJourid = (EditText) findViewById(R.id.jourid);
         mSearch = (Button) findViewById(R.id.search);
@@ -57,17 +56,17 @@ public class ScanActivity extends AppCompatActivity implements IScanView {
                 //TODO 通过webservice搜索日记账
                 String jid = mJourid.getText().toString();
                 new getERPTask().execute(jid);
-                LoadDialog.showDialog(ScanActivity.this);
+                LoadDialog.showDialog(ScanActivity.this, "请稍等");
             }
         });
 
         mJourlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent it = new Intent(ScanActivity.this,ItemActivity.class);
+                Intent it = new Intent(ScanActivity.this, ItemActivity.class);
                 Gson gson = new Gson();
                 String jstr = gson.toJson(iJournals.get(i));
-                Log.d("debug",jstr);
+                Log.d("debug", jstr);
                 it.putExtra("jour", jstr);
                 startActivity(it);
             }
@@ -96,7 +95,7 @@ public class ScanActivity extends AppCompatActivity implements IScanView {
         @Override
         //此方法可以在主线程改变UI
         protected void onPostExecute(List<IJournal> result) {
-            JourAdapter jourAdapter = new JourAdapter(ScanActivity.this,result);
+            JourAdapter jourAdapter = new JourAdapter(ScanActivity.this, result);
             mJourlist.setAdapter(jourAdapter);
             LoadDialog.cancelDialog();
         }

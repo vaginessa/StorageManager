@@ -42,8 +42,6 @@ public class ScanPresenterCompl implements IScanPresenter {
 
     }
 
-
-
     @Override
     public List<IJournal> getERPinfo(String jourid) {
         List<IJournal> iJournals = new ArrayList<>();
@@ -88,15 +86,15 @@ public class ScanPresenterCompl implements IScanPresenter {
             items = new ArrayList<>();
             for (int j = 0; j < itemlist.getPropertyCount(); j++) {
                 SoapObject item = (SoapObject) itemlist.getProperty(j);
-                items.add(new Item(item.getProperty("itemid").toString(),
-                        item.getProperty("itemqlty").toString(),
-                        item.getProperty("itemtol").toString(),
-                        item.getProperty("itembc").toString(),
-                        item.getProperty("itemseri").toString(),
-                        item.getProperty("itemqty").toString(),
-                        item.getProperty("itemwt").toString(),
-                        item.getProperty("itemst").toString(),
-                        item.getProperty("itemslc").toString()));
+                items.add(new Item(item.getPrimitiveProperty("itemid").toString(),
+                        item.getPrimitiveProperty("itemqlty").toString(),
+                        item.getPrimitiveProperty("itemtol").toString(),
+                        item.getPrimitiveProperty("itembc").toString(),
+                        item.getPrimitiveProperty("itemseri").toString(),
+                        item.getPrimitiveProperty("itemqty").toString(),
+                        item.getPrimitiveProperty("itemwt").toString(),
+                        item.getPrimitiveProperty("itemst").toString(),
+                        item.getPrimitiveProperty("itemslc").toString()));
             }
             iJournals.add(new Journal(jourlist.getProperty("jourid").toString(), items));
             Log.d("debug", String.valueOf(iJournals.get(i).getItemlist().size()));

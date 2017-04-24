@@ -11,12 +11,13 @@ import dmax.dialog.SpotsDialog;
 
 public class LoadDialog {
     private static SpotsDialog spotsdialog;
-    public static void showDialog(Context context){
-        spotsdialog = new SpotsDialog(context,"请稍等");
+
+    public static void showDialog(Context context, String msg) {
+        spotsdialog = new SpotsDialog(context, msg);
         spotsdialog.show();
     }
 
-    public static void cancelDialog(){
+    public static void cancelDialog() {
         spotsdialog.cancel();
     }
 }

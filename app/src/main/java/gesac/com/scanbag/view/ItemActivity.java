@@ -2,6 +2,7 @@ package gesac.com.scanbag.view;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ListViewCompat;
@@ -11,6 +12,7 @@ import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -22,6 +24,8 @@ import gesac.com.scanbag.presenter.ItemPresenterCompl;
 import gesac.com.splitbag.model.IBag;
 import gesac.com.splitbag.presenter.ISplitPresenter;
 import gesac.com.splitbag.presenter.SplitPresenterCompl;
+import gesac.com.uitity.LoadDialog;
+import gesac.com.uitity.StatusBox;
 
 public class ItemActivity extends AppCompatActivity implements IItemVIew {
     private EditText mItemstr;
@@ -41,8 +45,8 @@ public class ItemActivity extends AppCompatActivity implements IItemVIew {
         Intent it = getIntent();
         iJournal = new Gson().fromJson(it.getStringExtra("jour"), Journal.class);
         Log.d("debug", String.valueOf(iJournal.getItemlist().size()));
-        bindViews();
         iItemPresenter = new ItemPresenterCompl(this);
+        bindViews();
     }
 
     private void bindViews() {
@@ -51,7 +55,7 @@ public class ItemActivity extends AppCompatActivity implements IItemVIew {
         mItemlist = (ListView) findViewById(R.id.itemlist);
         mJourid.setText(iJournal.getJourid());
 
-        adapter = new ItemAdapter(this, iJournal.getItemlist());
+        adapter = new ItemAdapter(this, iItemPresenter, iJournal.getItemlist());
         mItemlist.setAdapter(adapter);
         mItemstr.setInputType(InputType.TYPE_NULL);
     }
@@ -64,7 +68,6 @@ public class ItemActivity extends AppCompatActivity implements IItemVIew {
             return super.onKeyDown(keyCode, event);
         }
         return super.onKeyDown(keyCode, event);
-
     }
 
     @Override
@@ -76,7 +79,8 @@ public class ItemActivity extends AppCompatActivity implements IItemVIew {
             iBag = iItemPresenter.subString(strcode);
             //TODO iBag与list比较
             if (iBag != null) {
-                int isin = iItemPresenter.isInJour(iBag, iJournal);
+//                int isin = iItemPresenter.isInJour(iBag, iJournal);
+                int isin = 1;
                 if (isin != 0) {
                     //TODO 若匹配则按钮可按
                     iJournal.getItemlist().get(isin).setIsin(1);
@@ -88,5 +92,25 @@ public class ItemActivity extends AppCompatActivity implements IItemVIew {
             }
         }
         return super.onKeyUp(keyCode, event);
+    }
+
+    @Override
+    public void showLoad(String str) {
+        LoadDialog.showDialog(this, str);
+    }
+
+    @Override
+    public void closeLoad() {
+        LoadDialog.cancelDialog();
+    }
+
+    @Override
+    public void showToast(String str) {
+        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void openBluetooth(Intent it) {
+        startActivityForResult(it, 2);
     }
 }

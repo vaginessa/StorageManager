@@ -34,17 +34,19 @@ public class SplitPresenterCompl implements ISplitPresenter {
     }
 
     public IBag subString(String str) {
-        String[] sourceStrArray = str.split(",,");
-        try {
-            iBag = new Bag(sourceStrArray[0], sourceStrArray[1], sourceStrArray[2], sourceStrArray[3],
-                    String.valueOf((int) Math.round(Double.parseDouble(sourceStrArray[5]))),
-                    sourceStrArray[6]);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            Log.i("message", "subString: " + e.toString());
-            iSplitView.clearEdt();
-            return null;
+        if (!str.isEmpty()) {
+            String[] sourceStrArray = str.split(",,");
+            try {
+                iBag = new Bag(sourceStrArray[0], sourceStrArray[1], sourceStrArray[2], sourceStrArray[3],
+                        String.valueOf((int) Math.round(Double.parseDouble(sourceStrArray[5]))),
+                        sourceStrArray[6]);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                Log.i("message", "subString: " + e.toString());
+                iSplitView.clearEdt();
+                return null;
+            }
+            iSplitView.fillEdt(iBag);
         }
-        iSplitView.fillEdt(iBag);
         return iBag;
     }
 
@@ -126,6 +128,11 @@ public class SplitPresenterCompl implements ISplitPresenter {
         zpSDK.zp_page_free();
         zpSDK.zp_close();
         iSplitView.closeStatbox();
+    }
+
+    public boolean initBag(IBag iBag){
+        this.iBag = iBag;
+        return true;
     }
 
     @Override
