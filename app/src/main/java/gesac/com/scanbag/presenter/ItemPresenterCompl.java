@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Handler;
-import android.util.Log;
 
 import java.util.Set;
 
@@ -19,12 +18,11 @@ import zpSDK.zpSDK.zpSDK;
  */
 
 public class ItemPresenterCompl implements IItemPresenter {
-    private IItemVIew iItemVIew;
-    private IBag iBag;
-    Handler handler;
-
     public static BluetoothAdapter myBluetoothAdapter;
     public String SelectedBDAddress;
+    Handler handler;
+    private IItemVIew iItemVIew;
+    private IBag iBag;
 
     public ItemPresenterCompl(IItemVIew iItemVIew) {
         this.iItemVIew = iItemVIew;
@@ -34,21 +32,30 @@ public class ItemPresenterCompl implements IItemPresenter {
     @Override
     public Integer isInJour(IBag iBag, IJournal ijournal) {
         for (int i = 0; i < ijournal.getItemlist().size(); i++) {
-            if (ijournal.getItemlist().get(i).equals(iBag.getPctid())) {
+            if (ijournal.getItemlist().get(i).getItemid().equalsIgnoreCase(iBag.getPctid())) {
                 return i;
             }
         }
-        return 0;
+        return -1;
     }
 
     public IBag subString(String str) {
         String[] sourceStrArray = str.split(",,");
         try {
-            iBag = new Bag(sourceStrArray[0], sourceStrArray[1], sourceStrArray[2], sourceStrArray[3],
-                    String.valueOf((int) Math.round(Double.parseDouble(sourceStrArray[5]))),
-                    sourceStrArray[6]);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            Log.i("message", "subString: " + e.toString());
+            iBag = new Bag(sourceStrArray[0].replaceAll(",", ""),
+                    sourceStrArray[1].replaceAll(",", ""),
+                    sourceStrArray[2].replaceAll(",", ""),
+                    sourceStrArray[3].replaceAll(",", ""),
+                    String.valueOf((int) Math.round(Double.parseDouble(sourceStrArray[5].replaceAll(",", "")))),
+                    sourceStrArray[6].replaceAll(",", ""));
+//        } catch (ArrayIndexOutOfBoundsException e) {
+//            iItemVIew.showAlert("条码错误！");
+//            return null;
+//        }catch (NumberFormatException e){
+//            iItemVIew.showAlert("条码错误！");
+//            return null;
+        }catch (Exception e){
+            iItemVIew.showAlert("条码错误！");
             return null;
         }
         return iBag;
@@ -103,7 +110,7 @@ public class ItemPresenterCompl implements IItemPresenter {
         }
 //        iItemVIew.closeLoad();
 //        iItemVIew.showLoad("正在打印...");
-        if (!zpSDK.zp_page_create(80, 34.4)) { //70,30
+        if (!zpSDK.zp_page_create(80, 34)) { //70,30
 //            iItemVIew.showToast("创建打印页面失败");
 //            iItemVIew.closeLoad();
             return "打印失败！请检查与打印机的连接是否正常";
@@ -138,8 +145,8 @@ public class ItemPresenterCompl implements IItemPresenter {
     @Override
     public String initCode(String divnum) {
         String str = new String();
-        str = iBag.getPctid() + ",," + iBag.getPcttol() + ",," + iBag.getPctqlty() + ",," + iBag.getPctbc() + ",,,," + divnum
-                + ".0000,," + iBag.getPcthv();
+        str = "," + iBag.getPctid() + ",," + iBag.getPcttol() + ",," + iBag.getPctqlty() + ",," + iBag.getPctbc() + ",,,," + divnum
+                + ".0000,," + iBag.getPcthv() + ",";
         return str;
     }
 

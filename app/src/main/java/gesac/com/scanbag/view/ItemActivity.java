@@ -2,10 +2,8 @@ package gesac.com.scanbag.view;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.ListViewCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -22,10 +20,7 @@ import gesac.com.scanbag.model.Journal;
 import gesac.com.scanbag.presenter.IItemPresenter;
 import gesac.com.scanbag.presenter.ItemPresenterCompl;
 import gesac.com.splitbag.model.IBag;
-import gesac.com.splitbag.presenter.ISplitPresenter;
-import gesac.com.splitbag.presenter.SplitPresenterCompl;
 import gesac.com.uitity.LoadDialog;
-import gesac.com.uitity.StatusBox;
 
 public class ItemActivity extends AppCompatActivity implements IItemVIew {
     private EditText mItemstr;
@@ -79,16 +74,14 @@ public class ItemActivity extends AppCompatActivity implements IItemVIew {
             iBag = iItemPresenter.subString(strcode);
             //TODO iBag与list比较
             if (iBag != null) {
-//                int isin = iItemPresenter.isInJour(iBag, iJournal);
-                int isin = 1;
-                if (isin != 0) {
+                int position = iItemPresenter.isInJour(iBag, iJournal);
+//                int isin = 1;
+                if (position != -1) {
                     //TODO 若匹配则按钮可按
-                    iJournal.getItemlist().get(isin).setIsin(1);
+                    iJournal.getItemlist().get(position).setIsin(1);
                     adapter.notifyDataSetChanged();
-                } else new AlertDialog.Builder(this)
-                        .setMessage("匹配错误")
-                        .setPositiveButton("确定", null)
-                        .show();
+                    mItemlist.setSelection(position);
+                } else showAlert("匹配错误");
             }
         }
         return super.onKeyUp(keyCode, event);
@@ -102,6 +95,15 @@ public class ItemActivity extends AppCompatActivity implements IItemVIew {
     @Override
     public void closeLoad() {
         LoadDialog.cancelDialog();
+    }
+
+    @Override
+    public void showAlert(String str) {
+        new AlertDialog.Builder(this)
+                .setMessage(str)
+                .setPositiveButton("确定", null)
+                .setCancelable(false)
+                .show();
     }
 
     @Override

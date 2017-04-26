@@ -13,5 +13,7 @@ public interface IItemVIew {
 
     void showToast(String str);
 
+    void showAlert(String str);
+
     void openBluetooth(Intent it);
 }

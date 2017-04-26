@@ -48,7 +48,7 @@ public class ScanPresenterCompl implements IScanPresenter {
         List<Item> items = new ArrayList<>();
         String WSDL_URI = "http://10.2.2.67:8099/JournalService.asmx?WSDL";//wsdl 的uri
         String namespace = "http://tempuri.org/";//namespace
-        String methodName = "GetProdJournalBOM";//要调用的方法名称
+        String methodName = "GetJournalTrans";//要调用的方法名称
 
         SoapObject request = new SoapObject(namespace, methodName);
 //         设置需调用WebService接口需要传入的两个参数mobileCode、userId
@@ -77,6 +77,10 @@ public class ScanPresenterCompl implements IScanPresenter {
 
         // 获取返回的数据
         SoapObject object = (SoapObject) ((SoapObject) envelope.bodyIn).getProperty(0);
+//        object = (SoapObject) envelope.bodyIn;
+//        Log.d("debug", object.getName());
+
+
         // 获取返回的结果
 
 //        SoapObject item = (SoapObject) itemlist.getPrimitiveProperty("items");
@@ -92,13 +96,11 @@ public class ScanPresenterCompl implements IScanPresenter {
                         item.getPrimitiveProperty("itembc").toString(),
                         item.getPrimitiveProperty("itemseri").toString(),
                         item.getPrimitiveProperty("itemqty").toString(),
-                        item.getPrimitiveProperty("itemwt").toString(),
+                        item.getPrimitiveProperty("itemrqty").toString(),
                         item.getPrimitiveProperty("itemst").toString(),
                         item.getPrimitiveProperty("itemslc").toString()));
             }
             iJournals.add(new Journal(jourlist.getProperty("jourid").toString(), items));
-            Log.d("debug", String.valueOf(iJournals.get(i).getItemlist().size()));
-
 //            Log.d("debug", String.valueOf(iJournals.get(i).getItemlist().size()));
         }
 //        String result = jourlist.getProperty(0).toString();

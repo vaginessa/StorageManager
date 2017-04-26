@@ -109,7 +109,6 @@ public class ItemAdapter extends BaseAdapter {
                     itemlist.get(position).getItembc(),
                     itemlist.get(position).getItemqty(),
                     "");
-            iItemPresenter.initBag(bag);
             hold.splitBt.setEnabled(true);
             hold.splitBt.setOnClickListener(new View.OnClickListener() {
                 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

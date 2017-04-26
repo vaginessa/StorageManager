@@ -5,47 +5,6 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="14dp"
-        android:layout_y="84dp"
-        android:text="质量：" />
-
-    <TextView
-        android:id="@+id/itemqlty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="58dp"
-        android:layout_y="84dp"
-        android:text="质量" />
-
-    <TextView
-        android:id="@+id/itemtol"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="58dp"
-        android:layout_y="108dp"
-        android:text="公差" />
-
-    <Button
-        android:id="@+id/splitbt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_x="244dp"
-        android:layout_y="88dp"
-        android:text="拆包" />
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="14dp"
-        android:layout_y="108dp"
-        android:text="公差：" />
-
-    <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,20 +22,12 @@
         android:text="物料编号" />
 
     <TextView
-        android:id="@+id/itembc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="72dp"
-        android:layout_y="37dp"
-        android:text="批次ID" />
-
-    <TextView
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_x="14dp"
         android:layout_y="37dp"
-        android:text="批次ID：" />
+        android:text="批处理号：" />
 
     <TextView
         android:id="@+id/textView12"
@@ -95,67 +46,116 @@
         android:text="序列号" />
 
     <TextView
-        android:id="@+id/itemslc"
+        android:id="@+id/itembc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="280dp"
-        android:layout_y="56dp"
-        android:text="库位" />
-
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="236dp"
-        android:layout_y="56dp"
-        android:text="库位：" />
+        android:layout_x="87dp"
+        android:layout_y="37dp"
+        android:text="批次ID" />
 
     <TextView
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="236dp"
-        android:layout_y="34dp"
+        android:layout_x="14dp"
+        android:layout_y="84dp"
         android:text="仓库：" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="139dp"
+        android:layout_y="83dp"
+        android:text="库位：" />
+
+    <TextView
+        android:id="@+id/itemslc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="185dp"
+        android:layout_y="84dp"
+        android:text="库位" />
 
     <TextView
         android:id="@+id/itemst"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="279dp"
-        android:layout_y="34dp"
+        android:layout_x="59dp"
+        android:layout_y="84dp"
         android:text="仓库" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="15dp"
+        android:layout_y="107dp"
+        android:text="质量：" />
+
+    <TextView
+        android:id="@+id/itemqlty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="60dp"
+        android:layout_y="107dp"
+        android:text="质量" />
+
+    <TextView
+        android:id="@+id/itemtol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="60dp"
+        android:layout_y="131dp"
+        android:text="公差" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="15dp"
+        android:layout_y="131dp"
+        android:text="公差：" />
 
     <TextView
         android:id="@+id/itemqty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="193dp"
-        android:layout_y="85dp"
+        android:layout_x="183dp"
+        android:layout_y="108dp"
         android:text="数量" />
 
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="150dp"
-        android:layout_y="85dp"
+        android:layout_x="140dp"
+        android:layout_y="108dp"
         android:text="数量：" />
 
     <TextView
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="150dp"
+        android:layout_x="140dp"
 
-        android:layout_y="108dp"
-        android:text="重量：" />
+        android:layout_y="131dp"
+        android:text="现有量：" />
 
     <TextView
         android:id="@+id/itemwt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_x="194dp"
+        android:layout_x="199dp"
+        android:layout_y="131dp"
+        android:text="现有量" />
+
+    <Button
+        android:id="@+id/splitbt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_x="257dp"
         android:layout_y="108dp"
-        android:text="重量" />
+        android:text="拆包" />
 </AbsoluteLayout>

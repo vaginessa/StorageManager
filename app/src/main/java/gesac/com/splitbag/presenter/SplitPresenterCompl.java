@@ -5,14 +5,12 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import java.util.Set;
 
 import gesac.com.splitbag.model.Bag;
 import gesac.com.splitbag.model.IBag;
 import gesac.com.splitbag.view.ISplitView;
-
 import zpSDK.zpSDK.zpSDK;
 
 /**
@@ -20,12 +18,11 @@ import zpSDK.zpSDK.zpSDK;
  */
 
 public class SplitPresenterCompl implements ISplitPresenter {
+    public static BluetoothAdapter myBluetoothAdapter;
+    public String SelectedBDAddress;
     ISplitView iSplitView;
     IBag iBag;
     Handler handler;
-
-    public static BluetoothAdapter myBluetoothAdapter;
-    public String SelectedBDAddress;
 
     public SplitPresenterCompl(ISplitView iSplitView) {
         this.iSplitView = iSplitView;
@@ -37,11 +34,13 @@ public class SplitPresenterCompl implements ISplitPresenter {
         if (!str.isEmpty()) {
             String[] sourceStrArray = str.split(",,");
             try {
-                iBag = new Bag(sourceStrArray[0], sourceStrArray[1], sourceStrArray[2], sourceStrArray[3],
-                        String.valueOf((int) Math.round(Double.parseDouble(sourceStrArray[5]))),
-                        sourceStrArray[6]);
-            } catch (ArrayIndexOutOfBoundsException e) {
-                Log.i("message", "subString: " + e.toString());
+                iBag = new Bag(sourceStrArray[0].replaceAll(",", ""),
+                        sourceStrArray[1].replaceAll(",", ""),
+                        sourceStrArray[2].replaceAll(",", ""),
+                        sourceStrArray[3].replaceAll(",", ""),
+                        String.valueOf((int) Math.round(Double.parseDouble(sourceStrArray[5].replaceAll(",", "")))),
+                        sourceStrArray[6].replaceAll(",", ""));
+            } catch (Exception e) {
                 iSplitView.clearEdt();
                 return null;
             }
@@ -104,7 +103,7 @@ public class SplitPresenterCompl implements ISplitPresenter {
         }
         iSplitView.closeStatbox();
         iSplitView.showStatbox("正在打印...");
-        if (!zpSDK.zp_page_create(80, 34.4)) { //70,30
+        if (!zpSDK.zp_page_create(80, 34)) { //70,30
             iSplitView.showToast("创建打印页面失败");
             iSplitView.closeStatbox();
             return;
@@ -114,7 +113,7 @@ public class SplitPresenterCompl implements ISplitPresenter {
         zpSDK.zp_draw_text_ex(2, 2.5, iBag.getPctid().substring(1), "黑体", 3, 0, true, false, false);
         zpSDK.zp_draw_text_ex(40, 2.5, iBag.getPctbc(), "黑体", 3, 0, true, false, false);
         zpSDK.zp_draw_text_ex(25, 15, divnum, "黑体", 6.0, 0, true, false, false);
-        zpSDK.zp_draw_barcode2d(45, 20, str, zpSDK.BARCODE2D_TYPE.BARCODE2D_DATAMATRIX, 3, 3, 90);
+        zpSDK.zp_draw_barcode2d(40, 20, str, zpSDK.BARCODE2D_TYPE.BARCODE2D_DATAMATRIX, 3, 3, 90);
 
         zpSDK.zp_page_print(false);
         zpSDK.zp_printer_status_detect();
@@ -130,7 +129,7 @@ public class SplitPresenterCompl implements ISplitPresenter {
         iSplitView.closeStatbox();
     }
 
-    public boolean initBag(IBag iBag){
+    public boolean initBag(IBag iBag) {
         this.iBag = iBag;
         return true;
     }
@@ -138,8 +137,8 @@ public class SplitPresenterCompl implements ISplitPresenter {
     @Override
     public String initCode(String divnum) {
         String str = new String();
-        str = iBag.getPctid() + ",," + iBag.getPcttol() + ",," + iBag.getPctqlty() + ",," + iBag.getPctbc() + ",,,," + divnum
-                + ".0000,," + iBag.getPcthv();
+        str = "," + iBag.getPctid() + ",," + iBag.getPcttol() + ",," + iBag.getPctqlty() + ",," + iBag.getPctbc() + ",,,," + divnum
+                + ".0000,," + iBag.getPcthv() + ",";
         return str;
     }
 

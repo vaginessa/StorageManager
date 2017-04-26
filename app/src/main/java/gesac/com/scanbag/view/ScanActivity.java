@@ -55,7 +55,7 @@ public class ScanActivity extends AppCompatActivity implements IScanView {
             public void onClick(View view) {
                 //TODO 通过webservice搜索日记账
                 String jid = mJourid.getText().toString();
-                new getERPTask().execute(jid);
+                new getERPTask().execute("*" + jid + "*");
                 LoadDialog.showDialog(ScanActivity.this, "请稍等");
             }
         });
