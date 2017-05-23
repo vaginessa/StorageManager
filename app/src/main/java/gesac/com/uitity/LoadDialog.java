@@ -1,7 +1,6 @@
 package gesac.com.uitity;
 
 import android.content.Context;
-import android.content.Intent;
 
 import dmax.dialog.SpotsDialog;
 
@@ -10,12 +9,18 @@ import dmax.dialog.SpotsDialog;
  */
 
 public class LoadDialog {
-    private static SpotsDialog spotsdialog;
+    private static volatile SpotsDialog spotsdialog;
 
     public static void showDialog(Context context, String msg) {
-        spotsdialog = new SpotsDialog(context, msg);
+        if (spotsdialog == null) {
+            synchronized (LoadDialog.class) {
+                if (spotsdialog == null)
+                    spotsdialog = new SpotsDialog(context, msg);
+            }
+        }
         spotsdialog.show();
     }
+
 
     public static void cancelDialog() {
         spotsdialog.cancel();

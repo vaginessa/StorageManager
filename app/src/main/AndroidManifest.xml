@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".splitbag.view.SplitActivity" />
-        <activity android:name=".scanbag.view.ItemActivity"></activity>
+        <activity android:name=".scanbag.view.ItemActivity" />
+        <activity android:name=".chkstock.ChkStockActivity"></activity>
     </application>
 
 </manifest>

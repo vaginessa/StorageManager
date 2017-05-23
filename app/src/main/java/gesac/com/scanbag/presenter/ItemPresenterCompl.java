@@ -3,7 +3,6 @@ package gesac.com.scanbag.presenter;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
-import android.os.Handler;
 
 import java.util.Set;
 
@@ -20,7 +19,6 @@ import zpSDK.zpSDK.zpSDK;
 public class ItemPresenterCompl implements IItemPresenter {
     public static BluetoothAdapter myBluetoothAdapter;
     public String SelectedBDAddress;
-    Handler handler;
     private IItemVIew iItemVIew;
     private IBag iBag;
 
@@ -32,7 +30,10 @@ public class ItemPresenterCompl implements IItemPresenter {
     @Override
     public Integer isInJour(IBag iBag, IJournal ijournal) {
         for (int i = 0; i < ijournal.getItemlist().size(); i++) {
-            if (ijournal.getItemlist().get(i).getItemid().equalsIgnoreCase(iBag.getPctid())) {
+            if (ijournal.getItemlist().get(i).getItemid().equalsIgnoreCase(iBag.getPctid())
+                    && ijournal.getItemlist().get(i).getItemqlty().equalsIgnoreCase(iBag.getPctqlty())
+                    && ijournal.getItemlist().get(i).getItemtol().equalsIgnoreCase(iBag.getPcttol())
+                    ) {
                 return i;
             }
         }
@@ -54,7 +55,7 @@ public class ItemPresenterCompl implements IItemPresenter {
 //        }catch (NumberFormatException e){
 //            iItemVIew.showAlert("条码错误！");
 //            return null;
-        }catch (Exception e){
+        } catch (Exception e) {
             iItemVIew.showAlert("条码错误！");
             return null;
         }
@@ -102,44 +103,87 @@ public class ItemPresenterCompl implements IItemPresenter {
         return "connect success";
     }
 
-    public String Print1(String divnum, String str) {
+    public int Print1(String divnum) {
 //        iItemVIew.showLoad("正在检查与打印机的连接...");
         if (!OpenPrinter().equals("connect success")) {
 //            iItemVIew.closeLoad();
-            return "打印失败！请检查与打印机的连接是否正常";
+            return -1;//"打印失败！请检查与打印机的连接是否正常";
         }
 //        iItemVIew.closeLoad();
 //        iItemVIew.showLoad("正在打印...");
         if (!zpSDK.zp_page_create(80, 34)) { //70,30
-//            iItemVIew.showToast("创建打印页面失败");
-//            iItemVIew.closeLoad();
-            return "打印失败！请检查与打印机的连接是否正常";
-        }
+            return 3;//"创建打印页面失败";
 
-        zpSDK.TextPosWinStyle = false;
-        zpSDK.zp_draw_text_ex(2, 2.5, iBag.getPctid().substring(1), "黑体", 3, 0, true, false, false);
-        zpSDK.zp_draw_text_ex(40, 2.5, iBag.getPctbc(), "黑体", 3, 0, true, false, false);
-        zpSDK.zp_draw_text_ex(25, 15, divnum, "黑体", 6.0, 0, true, false, false);
-        zpSDK.zp_draw_barcode2d(45, 20, str, zpSDK.BARCODE2D_TYPE.BARCODE2D_DATAMATRIX, 3, 3, 90);
+        } else {
+            zpSDK.TextPosWinStyle = false;
+            zpSDK.zp_draw_text_ex(2, 2.5, iBag.getPctid(), "黑体", 3, 0, true, false, false);
+            zpSDK.zp_draw_text_ex(40, 2.5, iBag.getPctbc(), "黑体", 3, 0, true, false, false);
+            zpSDK.zp_draw_text_ex(25, 15, divnum, "黑体", 6.0, 0, true, false, false);
+            String str = "," + iBag.getPctid() + ",,"
+                    + iBag.getPcttol() + ",,"
+                    + iBag.getPctqlty() + ",,"
+                    + iBag.getPctbc() + ",,,," + divnum
+                    + ".0000,," + iBag.getPcthv() + ",";
+            zpSDK.zp_draw_barcode2d(40, 20, str, zpSDK.BARCODE2D_TYPE.BARCODE2D_DATAMATRIX, 3, 3, 90);
 
-        zpSDK.zp_page_print(false);
-        zpSDK.zp_printer_status_detect();
-//        zpSDK.zp_goto_mark_right(4);
-        if (zpSDK.zp_printer_status_get(8000) != 0) {
-            return "打印失败！请检查与打印机的连接是否正常";
+            zpSDK.zp_page_print(false);
+//            zpSDK.zp_printer_status_detect();
+//        zpSDK.zp_goto_mark_label(4);
+            switch (zpSDK.zp_printer_status_get(5000)) {
+                case 0:
+                    break;
+                case -1:
+                    return -1; //"打印失败！请检查与打印机的连接是否正常";
+                case 1:
+                    return 1;// "打印失败！打印机纸仓盖开";
+                case 2:
+                    return 2;//"打印失败！打印机缺纸";
+                case 4:
+                    return 4;//"打印失败！打印头过热";
+                default:
+                    zpSDK.zp_page_free();
+            }
         }
 //        if (zpSDK.zp_printer_status_get(8000) != 0) {
 //            Toast.makeText(this, zpSDK.ErrorMessage, Toast.LENGTH_LONG).show();
 //        }
-        zpSDK.zp_page_free();
-        zpSDK.zp_close();
-//        iItemVIew.closeLoad();
-        return "打印成功";
-    }
+        if (!zpSDK.zp_page_create(80, 34.4)) { //70,30
+            return 3;//"创建打印页面失败";
 
-    public boolean initBag(IBag iBag) {
-        this.iBag = iBag;
-        return true;
+        } else {
+
+            zpSDK.TextPosWinStyle = false;
+            zpSDK.zp_draw_text_ex(2, 2.5, iBag.getPctid(), "黑体", 3, 0, true, false, false);
+            zpSDK.zp_draw_text_ex(40, 2.5, iBag.getPctbc(), "黑体", 3, 0, true, false, false);
+            zpSDK.zp_draw_text_ex(25, 15, (Integer.parseInt(iBag.getPctqty()) - Integer.parseInt(divnum)) + "", "黑体", 6.0, 0, true, false, false);
+            String str = "," + iBag.getPctid()
+                    + ",," + iBag.getPcttol()
+                    + ",," + iBag.getPctqlty()
+                    + ",," + iBag.getPctbc() + ",,,,"
+                    + (Integer.parseInt(iBag.getPctqty()) - Integer.parseInt(divnum))
+                    + ".0000,," + iBag.getPcthv() + ",";
+            zpSDK.zp_draw_barcode2d(40, 20, str, zpSDK.BARCODE2D_TYPE.BARCODE2D_DATAMATRIX, 3, 3, 90);
+
+            zpSDK.zp_page_print(false);
+            zpSDK.zp_printer_status_detect();
+//        zpSDK.zp_goto_mark_label(4);
+            switch (zpSDK.zp_printer_status_get(5000)) {
+                case 0:
+                    break;
+                case -1:
+                    return -1; //"打印失败！请检查与打印机的连接是否正常";
+                case 1:
+                    return 1;// "打印失败！打印机纸仓盖开";
+                case 2:
+                    return 2;//"打印失败！打印机缺纸";
+                case 4:
+                    return 4;//"打印失败！打印头过热";
+                default:
+                    zpSDK.zp_page_free();
+            }
+        }
+        zpSDK.zp_close();
+        return 0;//"打印成功";
     }
 
     @Override
@@ -151,16 +195,12 @@ public class ItemPresenterCompl implements IItemPresenter {
     }
 
     @Override
-    public String doPrint(String divnum) {
-        String sstr1 = initCode(divnum);
-        String sstr2 = initCode(Integer.parseInt(iBag.getPctqty()) - Integer.parseInt(divnum) + "");
-
+    public int doPrint(String divnum) {
         //TODO 打印
-        if (!finBDAddress().equals("bluetooth success"))
-            return "请连接打印机";
+        if (finBDAddress().equalsIgnoreCase("bluetooth success"))
+            return 5; //"请连接打印机"
         else {
-            Print1(divnum, sstr1);
-            String sign = Print1(String.valueOf(Integer.parseInt(iBag.getPctqty()) - Integer.parseInt(divnum)), sstr2);
+            int sign = Print1(divnum);
             return sign;
         }
     }

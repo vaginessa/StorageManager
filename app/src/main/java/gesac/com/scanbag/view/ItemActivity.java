@@ -1,9 +1,11 @@
 package gesac.com.scanbag.view;
 
+
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -21,13 +23,15 @@ import gesac.com.scanbag.presenter.IItemPresenter;
 import gesac.com.scanbag.presenter.ItemPresenterCompl;
 import gesac.com.splitbag.model.IBag;
 import gesac.com.uitity.LoadDialog;
+import gesac.com.uitity.WarnSPlayer;
 
-public class ItemActivity extends AppCompatActivity implements IItemVIew {
+public class ItemActivity extends Activity implements IItemVIew {
     private EditText mItemstr;
     private TextView mJourid;
     private ListView mItemlist;
 
     private IItemPresenter iItemPresenter;
+    private MediaPlayer mediaPlayer;
     private IBag iBag;
     private IJournal iJournal;
     private String strcode;
@@ -78,10 +82,13 @@ public class ItemActivity extends AppCompatActivity implements IItemVIew {
 //                int isin = 1;
                 if (position != -1) {
                     //TODO 若匹配则按钮可按
+                    WarnSPlayer.playsound(this, R.raw.macthsd);
                     iJournal.getItemlist().get(position).setIsin(1);
                     adapter.notifyDataSetChanged();
-                    mItemlist.setSelection(position);
-                } else showAlert("匹配错误");
+                    mItemlist.setSelection(position - 1);
+                } else {
+                    WarnSPlayer.playsound(this, R.raw.error);
+                }
             }
         }
         return super.onKeyUp(keyCode, event);

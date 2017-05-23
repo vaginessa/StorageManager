@@ -11,17 +11,18 @@ import java.util.List;
 
 import gesac.com.R;
 import gesac.com.scanbag.model.IJournal;
+import gesac.com.scanbag.model.Journal;
 
 /**
  * Created by GE11522 on 2017/4/18.
  */
 
 public class JourAdapter extends BaseAdapter {
-    List<IJournal> iJournals;
+    List<Journal> iJournals;
     private LayoutInflater mInflater;
     private Context context;
 
-    public JourAdapter(Context context, List<IJournal> iJournals) {
+    public JourAdapter(Context context, List<Journal> iJournals) {
         this.iJournals = iJournals;
         this.context = context;
         this.mInflater = LayoutInflater.from(context);

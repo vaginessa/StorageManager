@@ -2,6 +2,8 @@ package gesac.com.scanbag.model;
 
 import java.util.List;
 
+import gesac.com.splitbag.model.IBag;
+
 /**
  * Created by GE11522 on 2017/4/17.
  */
@@ -34,5 +36,20 @@ public class Journal implements IJournal {
 
     public List<Item> getItemlist() {
         return items;
+    }
+
+    @Override
+    public Integer isInJour(IBag iBag, IJournal ijournal) {
+        for (int i = 0; i < ijournal.getItemlist().size(); i++) {
+            if (ijournal.getItemlist().get(i).getItemid().equalsIgnoreCase(iBag.getPctid())
+                    && ijournal.getItemlist().get(i).getItembc().equalsIgnoreCase(iBag.getPctbc())
+                    && ijournal.getItemlist().get(i).getItemqlty().equalsIgnoreCase(iBag.getPctqlty())
+                    && ijournal.getItemlist().get(i).getItemtol().equalsIgnoreCase(iBag.getPcttol())
+                    && ijournal.getItemlist().get(i).getItemqty().equalsIgnoreCase(iBag.getPctqty())
+                    && ijournal.getItemlist().get(i).getItemwt().equalsIgnoreCase(iBag.getPcthv())) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

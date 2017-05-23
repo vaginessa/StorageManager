@@ -14,6 +14,5 @@ import gesac.com.splitbag.model.IBag;
 public interface IScanPresenter {
 
     boolean doCheck(Item item);
-    void doScan();
-    List<IJournal> getERPinfo(String jourid);
+    String getERPinfo(String jourid);
 }

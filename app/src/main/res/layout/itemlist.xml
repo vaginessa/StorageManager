@@ -2,7 +2,7 @@
 <AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    >
 
     <TextView
         android:id="@+id/textView10"
@@ -16,7 +16,6 @@
         android:id="@+id/itemid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_x="86dp"
         android:layout_y="11dp"
         android:text="物料编号" />
@@ -138,7 +137,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_x="140dp"
-
         android:layout_y="131dp"
         android:text="现有量：" />
 
@@ -154,7 +152,6 @@
         android:id="@+id/splitbt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_x="257dp"
         android:layout_y="108dp"
         android:text="拆包" />

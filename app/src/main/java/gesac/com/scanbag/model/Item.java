@@ -1,22 +1,23 @@
 package gesac.com.scanbag.model;
 
+import android.databinding.BaseObservable;
+
 /**
  * Created by GE11522 on 2017/4/14.
  */
-
-public class Item {
+public class Item extends BaseObservable{
     String itemid,itemqlty,itemtol,itembc,itemseri,itemqty,itemwt,itemst,itemslc;
     int isin;
     public Item(String itemid, String itemqlty, String itemtol, String itembc, String itemseri, String itemqty, String itemwt, String itemst, String itemslc) {
-        this.itemid = itemid;
-        this.itemqlty = itemqlty;
-        this.itemtol = itemtol;
-        this.itembc = itembc;
-        this.itemseri = itemseri;
-        this.itemqty = itemqty;
-        this.itemwt = itemwt;
-        this.itemst = itemst;
-        this.itemslc = itemslc;
+        this.itemid = itemid; //物料编号
+        this.itemqlty = itemqlty; //质量号
+        this.itemtol = itemtol; //公差
+        this.itembc = itembc; //批处理号
+        this.itemseri = itemseri; //序列号
+        this.itemqty = itemqty; //数量
+        this.itemwt = itemwt; //重量
+        this.itemst = itemst; //仓库
+        this.itemslc = itemslc; //库位
         isin = 0;
     }
 

@@ -11,14 +11,14 @@ public interface IItemPresenter {
     Integer isInJour(IBag iBag, IJournal ijournal);
     IBag subString(String str);
 //    boolean initBag(IBag iBag);
-    String finBDAddress();
+//    String finBDAddress();
 
-    String OpenPrinter();
+//    String OpenPrinter();
 
-    String Print1(String divnum, String str);
+    int Print1(String divnum);
 
     String initCode(String divnum);
 
-    String doPrint(String divnum);
+    int doPrint(String divnum);
 
 }

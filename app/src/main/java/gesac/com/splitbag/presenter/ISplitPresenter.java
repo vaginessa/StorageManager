@@ -13,7 +13,7 @@ public interface ISplitPresenter {
 
     boolean OpenPrinter();
 
-    void Print1(String divnum, String str);
+    void Print1(String divnum);
 
     String initCode(String divnum);
 

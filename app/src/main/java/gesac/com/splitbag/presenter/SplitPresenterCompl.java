@@ -95,7 +95,7 @@ public class SplitPresenterCompl implements ISplitPresenter {
         return true;
     }
 
-    public void Print1(String divnum, String str) {
+    public void Print1(String divnum) {
         iSplitView.showStatbox("正在检查与打印机的连接...");
         if (!OpenPrinter()) {
             iSplitView.closeStatbox();
@@ -107,24 +107,84 @@ public class SplitPresenterCompl implements ISplitPresenter {
             iSplitView.showToast("创建打印页面失败");
             iSplitView.closeStatbox();
             return;
-        }
+        } else {
 
-        zpSDK.TextPosWinStyle = false;
-        zpSDK.zp_draw_text_ex(2, 2.5, iBag.getPctid().substring(1), "黑体", 3, 0, true, false, false);
-        zpSDK.zp_draw_text_ex(40, 2.5, iBag.getPctbc(), "黑体", 3, 0, true, false, false);
-        zpSDK.zp_draw_text_ex(25, 15, divnum, "黑体", 6.0, 0, true, false, false);
-        zpSDK.zp_draw_barcode2d(40, 20, str, zpSDK.BARCODE2D_TYPE.BARCODE2D_DATAMATRIX, 3, 3, 90);
+            zpSDK.TextPosWinStyle = false;
+            zpSDK.zp_draw_text_ex(2, 2.5, iBag.getPctid(), "黑体", 3, 0, true, false, false);
+            zpSDK.zp_draw_text_ex(40, 2.5, iBag.getPctbc(), "黑体", 3, 0, true, false, false);
+            zpSDK.zp_draw_text_ex(25, 15, divnum, "黑体", 6.0, 0, true, false, false);
+            String str = "," + iBag.getPctid() + ",,"
+                    + iBag.getPcttol() + ",,"
+                    + iBag.getPctqlty() + ",,"
+                    + iBag.getPctbc() + ",,,," + divnum
+                    + ".0000,," + iBag.getPcthv() + ",";
+            zpSDK.zp_draw_barcode2d(40, 20, str, zpSDK.BARCODE2D_TYPE.BARCODE2D_DATAMATRIX, 3, 3, 90);
 
-        zpSDK.zp_page_print(false);
-        zpSDK.zp_printer_status_detect();
-//        zpSDK.zp_goto_mark_right(4);
-        if (zpSDK.zp_printer_status_get(8000) != 0) {
-            iSplitView.showToast("打印失败！请检查与打印机的连接是否正常");
+            zpSDK.zp_page_print(false);
+            zpSDK.zp_printer_status_detect();
+//        zpSDK.zp_goto_mark_label(4);
+            switch (zpSDK.zp_printer_status_get(8000)) {
+                case 0:
+                    break;
+                case -1:
+                    iSplitView.showToast("打印失败！请检查与打印机的连接是否正常");
+                    break;
+                case 1:
+                    iSplitView.showToast("打印失败！打印机纸仓盖开");
+                    break;
+                case 2:
+                    iSplitView.showToast("打印失败！打印机缺纸");
+                    break;
+                case 4:
+                    iSplitView.showToast("打印失败！打印头过热");
+                    break;
+                default:
+                    zpSDK.zp_page_free();
+            }
         }
 //        if (zpSDK.zp_printer_status_get(8000) != 0) {
 //            Toast.makeText(this, zpSDK.ErrorMessage, Toast.LENGTH_LONG).show();
 //        }
-        zpSDK.zp_page_free();
+        if (!zpSDK.zp_page_create(80, 34.4)) { //70,30
+            iSplitView.showToast("创建打印页面失败");
+            iSplitView.closeStatbox();
+            return;
+        } else {
+
+            zpSDK.TextPosWinStyle = false;
+            zpSDK.zp_draw_text_ex(2, 2.5, iBag.getPctid(), "黑体", 3, 0, true, false, false);
+            zpSDK.zp_draw_text_ex(40, 2.5, iBag.getPctbc(), "黑体", 3, 0, true, false, false);
+            zpSDK.zp_draw_text_ex(25, 15, (Integer.parseInt(iBag.getPctqty()) - Integer.parseInt(divnum)) + "", "黑体", 6.0, 0, true, false, false);
+            String str = "," + iBag.getPctid()
+                    + ",," + iBag.getPcttol()
+                    + ",," + iBag.getPctqlty()
+                    + ",," + iBag.getPctbc() + ",,,,"
+                    + (Integer.parseInt(iBag.getPctqty()) - Integer.parseInt(divnum))
+                    + ".0000,," + iBag.getPcthv() + ",";
+            zpSDK.zp_draw_barcode2d(40, 20, str, zpSDK.BARCODE2D_TYPE.BARCODE2D_DATAMATRIX, 3, 3, 90);
+
+            zpSDK.zp_page_print(false);
+            zpSDK.zp_printer_status_detect();
+//        zpSDK.zp_goto_mark_label(4);
+            switch (zpSDK.zp_printer_status_get(8000)) {
+                case 0:
+                    break;
+                case -1:
+                    iSplitView.showToast("打印失败！请检查与打印机的连接是否正常");
+                    break;
+                case 1:
+                    iSplitView.showToast("打印失败！打印机纸仓盖开");
+                    break;
+                case 2:
+                    iSplitView.showToast("打印失败！打印机缺纸");
+                    break;
+                case 4:
+                    iSplitView.showToast("打印失败！打印头过热");
+                    break;
+                default:
+                    zpSDK.zp_page_free();
+            }
+        }
         zpSDK.zp_close();
         iSplitView.closeStatbox();
     }
@@ -151,8 +211,7 @@ public class SplitPresenterCompl implements ISplitPresenter {
         if (!finBDAddress())
             iSplitView.showToast("请连接打印机");
         else {
-            Print1(divnum, sstr1);
-            Print1(String.valueOf(Integer.parseInt(iBag.getPctqty()) - Integer.parseInt(divnum)), sstr2);
+            Print1(divnum);
         }
     }
 }

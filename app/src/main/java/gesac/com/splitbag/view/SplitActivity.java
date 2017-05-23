@@ -1,37 +1,31 @@
 package gesac.com.splitbag.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
-import com.google.gson.Gson;
-
 import gesac.com.R;
-import gesac.com.scanbag.model.Item;
 import gesac.com.splitbag.model.IBag;
 import gesac.com.splitbag.presenter.ISplitPresenter;
 import gesac.com.splitbag.presenter.SplitPresenterCompl;
 import gesac.com.uitity.StatusBox;
 
-public class SplitActivity extends AppCompatActivity implements ISplitView {
+public class SplitActivity extends Activity implements ISplitView {
+    StatusBox statusBox;
+    ISplitPresenter iSplitPresenter;
     private EditText ecode, epctid, epctbc, epcthv, epctnum, epctdinum;
     private String spctnum = "", spctdinum = "";
     private Button bprint;
-
     private String codestr;
-    StatusBox statusBox;
-    ISplitPresenter iSplitPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +47,6 @@ public class SplitActivity extends AppCompatActivity implements ISplitView {
         statusBox = new StatusBox(this, bprint);
 
         ecode.setInputType(InputType.TYPE_NULL);
-
 
         epctdinum.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -154,6 +147,5 @@ public class SplitActivity extends AppCompatActivity implements ISplitView {
     public void openBluetooth(Intent it) {
         startActivityForResult(it, 2);
     }
-
 
 }
