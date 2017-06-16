@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import gesac.com.R;
-import gesac.com.scanbag.model.IJournal;
 import gesac.com.scanbag.model.Journal;
 
 /**
@@ -43,10 +42,6 @@ public class JourAdapter extends BaseAdapter {
         return position;
     }
 
-    class ViewHold{
-        TextView idView;
-    }
-
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         ViewHold hold;
@@ -60,6 +55,10 @@ public class JourAdapter extends BaseAdapter {
         }
 
         hold.idView.setText(iJournals.get(position).getJourid());
-                return convertView;
+        return convertView;
+    }
+
+    class ViewHold {
+        TextView idView;
     }
 }

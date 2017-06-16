@@ -1,34 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
     tools:context="gesac.com.home.view.HomeActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/scan_home"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="拣包程序" />
+        <Button
+            android:id="@+id/scan_home"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="仓库领料" />
 
-    <Button
-        android:id="@+id/split_home"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="拆包程序" />
+        <Button
+            android:id="@+id/chk_home"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="仓库盘点" />
 
-    <Button
-        android:id="@+id/bluetooth"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="设置打印机"
-        android:enabled="false"
-        />
+        <Button
+            android:id="@+id/loc_home"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="查询物料库位" />
+
+        <Button
+            android:id="@+id/bluetooth"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:enabled="false"
+            android:text="设置打印机" />
 
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="itemadapter"
+            type="gesac.com.pickitem.ItemAdapter"></variable>
+    </data>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context="gesac.com.scanbag.view.ItemActivity">
+    >
 
     <TextView
-        android:id="@+id/jourid"
+        android:id="@+id/jourid_tv"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30dp"
-        android:text="xxxxx"/>
+        />
 
     <EditText
-        android:id="@+id/itemstr"
+        android:id="@+id/itemstr_et"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:singleLine="true"/>
     <ListView
         android:id="@+id/itemlist"
@@ -28,5 +33,7 @@
         android:layout_marginTop="10dp"
         android:scrollbars="vertical"
         android:fadeScrollbars="false"
+        app:adapter="@{itemadapter}"
         />
 </LinearLayout>
+</layout>

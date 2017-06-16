@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="gesac.com">
 
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -24,7 +25,11 @@
         </activity>
         <activity android:name=".splitbag.view.SplitActivity" />
         <activity android:name=".scanbag.view.ItemActivity" />
-        <activity android:name=".chkstock.ChkStockActivity"></activity>
+        <activity android:name=".chkstock.ChkStockActivity" />
+        <activity android:name=".locstock.LocStockActivity" />
+        <activity android:name=".chkstock.StockActivity" />
+        <activity android:name=".pickitem.HdwPickActivity" />
+        <activity android:name=".pickitem.ItemActivity"></activity>
     </application>
 
 </manifest>

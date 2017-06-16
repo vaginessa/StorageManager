@@ -5,9 +5,11 @@
             name="item"
             type="gesac.com.scanbag.model.Item"></variable>
     </data>
+
     <AbsoluteLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@{Integer.parseInt(item.itemqty) == 0 ? @color/green:@color/gray}">
 
         <TextView
             android:id="@+id/textView10"
@@ -33,21 +35,6 @@
             android:layout_y="37dp"
             android:text="批处理号：" />
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_x="14dp"
-            android:layout_y="61dp"
-            android:text="序列号：" />
-
-        <TextView
-            android:id="@+id/itemseri"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_x="74dp"
-            android:layout_y="61dp"
-            android:text="@{item.itemseri}" />
 
         <TextView
             android:id="@+id/itembc"
@@ -58,43 +45,11 @@
             android:text="@{item.itembc}" />
 
         <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_x="14dp"
-            android:layout_y="84dp"
-            android:text="仓库：" />
-
-        <TextView
-            android:id="@+id/textView18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_x="139dp"
-            android:layout_y="83dp"
-            android:text="库位：" />
-
-        <TextView
-            android:id="@+id/itemslc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_x="185dp"
-            android:layout_y="84dp"
-            android:text="@{item.itemslc}" />
-
-        <TextView
-            android:id="@+id/itemst"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_x="59dp"
-            android:layout_y="84dp"
-            android:text="@{item.itemst}" />
-
-        <TextView
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_x="15dp"
-            android:layout_y="107dp"
+            android:layout_y="63dp"
             android:text="质量：" />
 
         <TextView
@@ -102,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_x="60dp"
-            android:layout_y="107dp"
+            android:layout_y="63dp"
             android:text="@{item.itemqlty}" />
 
         <TextView
@@ -110,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_x="60dp"
-            android:layout_y="131dp"
+            android:layout_y="89dp"
             android:text="@{item.itemtol}" />
 
         <TextView
@@ -118,40 +73,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_x="15dp"
-            android:layout_y="131dp"
+            android:layout_y="89dp"
             android:text="公差：" />
-
-        <TextView
-            android:id="@+id/itemqty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_x="183dp"
-            android:layout_y="108dp"
-            android:text="@{item.itemqty}" />
-
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_x="140dp"
-            android:layout_y="108dp"
-            android:text="数量：" />
-
         <TextView
             android:id="@+id/textView16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_x="140dp"
-            android:layout_y="131dp"
-            android:text="现有量：" />
+            android:layout_y="63dp"
+            android:text="总量：" />
 
         <TextView
-            android:id="@+id/itemwt"
+            android:id="@+id/itemqty_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_x="199dp"
-            android:layout_y="131dp"
-            android:text="@{item.itemwt}" />
+            android:layout_y="63dp"
+            android:text=""
+            />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="140dp"
+            android:layout_y="89dp"
+            android:text="现有量：" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="199dp"
+            android:layout_y="89dp"
+            android:textSize="30dp"
+            android:text="@{item.itemqty}" />
 
     </AbsoluteLayout>
 

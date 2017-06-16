@@ -4,7 +4,6 @@ package gesac.com.scanbag.view;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -22,6 +21,7 @@ import gesac.com.scanbag.model.Journal;
 import gesac.com.scanbag.presenter.IItemPresenter;
 import gesac.com.scanbag.presenter.ItemPresenterCompl;
 import gesac.com.splitbag.model.IBag;
+import gesac.com.uitity.CodeUtil;
 import gesac.com.uitity.LoadDialog;
 import gesac.com.uitity.WarnSPlayer;
 
@@ -31,7 +31,6 @@ public class ItemActivity extends Activity implements IItemVIew {
     private ListView mItemlist;
 
     private IItemPresenter iItemPresenter;
-    private MediaPlayer mediaPlayer;
     private IBag iBag;
     private IJournal iJournal;
     private String strcode;
@@ -49,7 +48,7 @@ public class ItemActivity extends Activity implements IItemVIew {
     }
 
     private void bindViews() {
-        mItemstr = (EditText) findViewById(R.id.itemstr);
+        mItemstr = (EditText) findViewById(R.id.itemstr_et);
         mJourid = (TextView) findViewById(R.id.jourid);
         mItemlist = (ListView) findViewById(R.id.itemlist);
         mJourid.setText(iJournal.getJourid());
@@ -76,15 +75,15 @@ public class ItemActivity extends Activity implements IItemVIew {
             mItemstr.postInvalidate();
             strcode = mItemstr.getText().toString();
             iBag = iItemPresenter.subString(strcode);
+            mItemstr.setText("");
             //TODO iBag与list比较
             if (iBag != null) {
-                int position = iItemPresenter.isInJour(iBag, iJournal);
+                int position = CodeUtil.isInItemls(iBag, iJournal.getItemlist());
 //                int isin = 1;
                 if (position != -1) {
                     //TODO 若匹配则按钮可按
-                    WarnSPlayer.playsound(this, R.raw.macthsd);
-                    iJournal.getItemlist().get(position).setIsin(1);
-                    adapter.notifyDataSetChanged();
+                    WarnSPlayer.playsound(this, R.raw.matchscd);
+                    adapter.setIn(position);
                     mItemlist.setSelection(position - 1);
                 } else {
                     WarnSPlayer.playsound(this, R.raw.error);

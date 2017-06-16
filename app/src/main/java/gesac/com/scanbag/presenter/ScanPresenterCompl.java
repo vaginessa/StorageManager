@@ -74,10 +74,10 @@ public class ScanPresenterCompl implements IScanPresenter {
 
         // 获取返回的数据
         try {
-            SoapObject object = (SoapObject) ((SoapObject) envelope.bodyIn).getProperty(0);
+            SoapObject object = (SoapObject) ((SoapObject) envelope.bodyIn).getProperty("GetJournalTransResult");
             for (int i = 0; i < object.getPropertyCount(); i++) {
-                SoapObject jourlist = (SoapObject) object.getProperty(i);
-                SoapObject itemlist = (SoapObject) jourlist.getProperty("items");
+                SoapObject journal = (SoapObject) object.getProperty(i);
+                SoapObject itemlist = (SoapObject) journal.getProperty("items");
                 items = new ArrayList<>();
                 for (int j = 0; j < itemlist.getPropertyCount(); j++) {
                     SoapObject item = (SoapObject) itemlist.getProperty(j);
@@ -91,24 +91,11 @@ public class ScanPresenterCompl implements IScanPresenter {
                             item.getPrimitiveProperty("itemst").toString(),
                             item.getPrimitiveProperty("itemslc").toString()));
                 }
-                iJournals.add(new Journal(jourlist.getProperty("jourid").toString(), items));
+                iJournals.add(new Journal(journal.getProperty("jourid").toString(), items));
             }
         } catch (ClassCastException e) {
             return "请检查服务器设置";
         }
-//        object = (SoapObject) envelope.bodyIn;
-//        Log.d("debug", object.getName());
-
-
-        // 获取返回的结果
-
-//        SoapObject item = (SoapObject) itemlist.getPrimitiveProperty("items");
-
-//            Log.d("debug", String.valueOf(iJournals.get(i).getItemlist().size()));
-
-//        String result = jourlist.getProperty(0).toString();
-
-//        Log.d("debug", String.valueOf(iJournals.get(0).getJourid()));
         Gson gson = new Gson();
         String result = gson.toJson(iJournals);
         return result;

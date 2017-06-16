@@ -1,5 +1,7 @@
 package gesac.com.scanbag.model;
 
+import android.databinding.BaseObservable;
+
 import java.util.List;
 
 import gesac.com.splitbag.model.IBag;
@@ -8,7 +10,7 @@ import gesac.com.splitbag.model.IBag;
  * Created by GE11522 on 2017/4/17.
  */
 
-public class Journal implements IJournal {
+public class Journal extends BaseObservable implements IJournal {
     String jourid;
     List<Item> items;
 

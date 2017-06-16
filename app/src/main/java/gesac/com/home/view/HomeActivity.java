@@ -1,31 +1,33 @@
 package gesac.com.home.view;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import gesac.com.R;
+import gesac.com.chkstock.StockActivity;
+import gesac.com.databinding.ActivityHomeBinding;
 import gesac.com.home.model.Bluetooth;
 import gesac.com.home.presenter.BluettPersentCompl;
 import gesac.com.home.presenter.IBluettPersenter;
+import gesac.com.locstock.LocStockActivity;
+import gesac.com.pickitem.HdwPickActivity;
 import gesac.com.scanbag.view.ScanActivity;
-import gesac.com.splitbag.view.SplitActivity;
 import gesac.com.uitity.BHTApplication;
 
 public class HomeActivity extends Activity implements IBluettView {
     // Content View Elements
-
-    private Button mScan_home;
-    private Button mSplit_home;
-    private Button mBluetooth;
+    ActivityHomeBinding binding;
 
     private List<Bluetooth> bluetoothList = new ArrayList<>();
     private IBluettPersenter iBluettPersenter;
@@ -35,28 +37,50 @@ public class HomeActivity extends Activity implements IBluettView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        bindViews();
+        initViews();
         iBluettPersenter = new BluettPersentCompl(this);
     }
 
-    private void bindViews() {
+    private void initViews() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         bhtapp = (BHTApplication) getApplication();
-        mScan_home = (Button) findViewById(R.id.scan_home);
-        mSplit_home = (Button) findViewById(R.id.split_home);
-        mBluetooth = (Button) findViewById(R.id.bluetooth);
 
-        mScan_home.setOnClickListener(new View.OnClickListener() {
+        binding.scanHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(HomeActivity.this, ScanActivity.class);
+                String[] params = {"产品领料", "五金领料"};
+                new AlertDialog.Builder(HomeActivity.this)
+                        .setItems(params, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent it;
+                                switch (which) {
+                                    case 0:
+                                        it = new Intent(HomeActivity.this, ScanActivity.class);
+                                        startActivity(it);
+                                        break;
+                                    case 1:
+                                        it = new Intent(HomeActivity.this, HdwPickActivity.class);
+                                        startActivity(it);
+                                        break;
+                                }
+                            }
+                        })
+                        .show();
+
+            }
+        });
+        binding.chkHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(HomeActivity.this, StockActivity.class);
                 startActivity(it);
             }
         });
-        mSplit_home.setOnClickListener(new View.OnClickListener() {
+        binding.locHome.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent it = new Intent(HomeActivity.this, SplitActivity.class);
+            public void onClick(View v) {
+                Intent it = new Intent(HomeActivity.this, LocStockActivity.class);
                 startActivity(it);
             }
         });
@@ -94,7 +118,7 @@ public class HomeActivity extends Activity implements IBluettView {
 
     @Override
     public void openBHT(Intent it) {
-        startActivityForResult(it,0);
+        startActivityForResult(it, 0);
     }
 
     @Override
@@ -108,7 +132,7 @@ public class HomeActivity extends Activity implements IBluettView {
                             .getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                     // 搜索到的蓝牙设备
                     if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                        bluetoothList.add(new Bluetooth(device.getAddress(),device.getName(),device.getBondState()));
+                        bluetoothList.add(new Bluetooth(device.getAddress(), device.getName(), device.getBondState()));
                     }
                     // 搜索完成
                 }

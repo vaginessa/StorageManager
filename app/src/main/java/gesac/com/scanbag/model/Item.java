@@ -1,13 +1,16 @@
 package gesac.com.scanbag.model;
 
 import android.databinding.BaseObservable;
+import android.view.View;
+import android.widget.Toast;
 
 /**
  * Created by GE11522 on 2017/4/14.
  */
-public class Item extends BaseObservable{
-    String itemid,itemqlty,itemtol,itembc,itemseri,itemqty,itemwt,itemst,itemslc;
+public class Item extends BaseObservable {
+    String itemid, itemqlty, itemtol, itembc, itemseri, itemqty, itemwt, itemst, itemslc;
     int isin;
+
     public Item(String itemid, String itemqlty, String itemtol, String itembc, String itemseri, String itemqty, String itemwt, String itemst, String itemslc) {
         this.itemid = itemid; //物料编号
         this.itemqlty = itemqlty; //质量号
@@ -103,4 +106,10 @@ public class Item extends BaseObservable{
     public void setIsin(int isin) {
         this.isin = isin;
     }
+
+    public void onPickClick(View v) {
+        Toast.makeText(v.getContext(), getItemid(), Toast.LENGTH_SHORT).show();
+
+    }
+
 }

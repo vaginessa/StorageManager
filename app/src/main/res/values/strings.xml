@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">金鹭拣拆包</string>
+    <string name="app_name">金鹭仓库管家</string>
+    <string-array name="st_array">
+        <item>XS03</item>
+        <item>STCP91</item>
+    </string-array>
 </resources>

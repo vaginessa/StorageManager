@@ -45,7 +45,6 @@ public class ScanActivity extends Activity implements IScanView {
     private void bindViews() {
         mJourid = (EditText) findViewById(R.id.jourid);
         mSearch = (Button) findViewById(R.id.search);
-        mItemstr = (EditText) findViewById(R.id.itemstr);
         mJourlist = (ListView) findViewById(R.id.jourlist);
 
         mSearch.setOnClickListener(new View.OnClickListener() {

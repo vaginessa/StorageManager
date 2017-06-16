@@ -30,4 +30,6 @@ public interface IBag {
 
     String getPcthv();
 
+    boolean equals(IBag bag);
+
 }

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textSize="25dp"
-        android:text="拣包程序"/>
+        android:text="产品领料"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="20"
-            android:inputType="number"
+            android:inputType="numberSigned"
             android:singleLine="true"
             />
 

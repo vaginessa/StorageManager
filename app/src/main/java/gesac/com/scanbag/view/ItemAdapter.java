@@ -3,7 +3,6 @@ package gesac.com.scanbag.view;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -17,9 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import gesac.com.R;
 import gesac.com.scanbag.model.Item;
@@ -59,6 +56,12 @@ public class ItemAdapter extends BaseAdapter {
         return position;
     }
 
+    public boolean setIn(int position) {
+        itemlist.get(position).setIsin(1);
+        notifyDataSetChanged();
+        return true;
+    }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHold hold;
@@ -74,12 +77,11 @@ public class ItemAdapter extends BaseAdapter {
             hold.wtView = (TextView) convertView.findViewById(R.id.itemwt);
             hold.stView = (TextView) convertView.findViewById(R.id.itemst);
             hold.slcView = (TextView) convertView.findViewById(R.id.itemslc);
-            hold.splitBt = (Button) convertView.findViewById(R.id.splitbt);
+            hold.splitBt = (Button) convertView.findViewById(R.id.split_bt);
             convertView.setTag(hold);
         } else {
             hold = (ViewHold) convertView.getTag();
         }
-
         hold.idView.setText(itemlist.get(position).getItemid());
         hold.bcView.setText(itemlist.get(position).getItembc());
         hold.seriView.setText(itemlist.get(position).getItemseri());
@@ -89,58 +91,60 @@ public class ItemAdapter extends BaseAdapter {
         hold.wtView.setText(itemlist.get(position).getItemwt());
         hold.stView.setText(itemlist.get(position).getItemst());
         hold.slcView.setText(itemlist.get(position).getItemslc());
-        hold.splitBt.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onClick(View view) {
-                //TODO 拆包操作
-                AlertDialog.Builder aldg = new AlertDialog.Builder(context);
-                final View v = mInflater.inflate(R.layout.splitdialog, null);
-                final TextView tv = (TextView) v.findViewById(R.id.num);
-                final EditText et = (EditText) v.findViewById(R.id.divnum);
-                tv.setText(itemlist.get(position).getItemqty());
-                aldg.setCancelable(false)
-                        .setTitle("拆包")
-                        .setView(v);
-                aldg.setPositiveButton("打印", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String div = et.getText().toString();
-                        Map<String, String> map = new HashMap<>();
-                        if (!div.isEmpty()) {
-                            map.put("div", div);
-                            map.put("position", String.valueOf(position));
-                            splitBagTask sptask = new splitBagTask();
-                            sptask.execute(div);
-                            sptask.setOnAsyncRespones(new AsyncRespones() {
-                                @Override
-                                public void onDataReceivedSuccess(int result) {
-                                    if (result == 0) {
-                                        itemlist.remove(position);
-                                        notifyDataSetChanged();
+
+        if (itemlist.get(position).getIsin() != 0) {
+            hold.splitBt.setEnabled(true);
+            hold.splitBt.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public void onClick(View view) {
+                    //TODO 拆包操作
+                    AlertDialog.Builder aldg = new AlertDialog.Builder(context);
+                    final View v = mInflater.inflate(R.layout.splitdialog, null);
+                    final TextView tv = (TextView) v.findViewById(R.id.num);
+                    final EditText et = (EditText) v.findViewById(R.id.divnum);
+                    tv.setText(itemlist.get(position).getItemqty());
+                    aldg.setCancelable(false)
+                            .setTitle("拆包")
+                            .setView(v);
+                    aldg.setPositiveButton("打印", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            String div = et.getText().toString();
+//                            Map<String, String> map = new HashMap<>();
+                            if (!div.isEmpty()) {
+//                                map.put("div", div);
+//                                map.put("position", String.valueOf(position));
+                                splitBagTask sptask = new splitBagTask();
+                                sptask.execute(div);
+                                sptask.setOnAsyncRespones( new AsyncRespones() {
+                                    @Override
+                                    public void onDataReceivedSuccess(int result) {
+                                        if (result == 0) removeItem(position);
                                     }
-                                }
-                            });
-                            LoadDialog.showDialog(context, "打印中");
-                        } else
-                            Toast.makeText(context, "请输入拆分数量", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                        .setNegativeButton("取消", null)
-                        .setCancelable(false)
-                        .create()
-                        .show();
-            }
-        });
-
-
+                                });
+                                LoadDialog.showDialog(context, "打印中");
+                            } else
+                                Toast.makeText(context, "请输入拆分数量", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                            .setNegativeButton("取消", null)
+                            .setCancelable(false)
+                            .create()
+                            .show();
+                }
+            });
+        } else hold.splitBt.setEnabled(false);
         return convertView;
+    }
+
+    public void removeItem(int position) {
+        itemlist.remove(position);
+        notifyDataSetChanged();
     }
 
     private interface AsyncRespones {
         void onDataReceivedSuccess(int result);
-
-//        void onDataReceivedFailed();
     }
 
     class ViewHold {
@@ -172,7 +176,6 @@ public class ItemAdapter extends BaseAdapter {
         //此方法可以在主线程改变UI
         protected void onPostExecute(Integer result) {
             asyncRespones.onDataReceivedSuccess(result);
-            MediaPlayer mediaPlayer;
             String msg = "";
             switch (result) {
                 case 0:
@@ -193,7 +196,7 @@ public class ItemAdapter extends BaseAdapter {
                     break;
                 case 3:
                     msg = "创建打印页面失败";
-                    WarnSPlayer.playsound(context,R.raw.printerr);
+                    WarnSPlayer.playsound(context, R.raw.printerr);
                     break;
                 case 4:
                     msg = "打印失败！打印头过热";

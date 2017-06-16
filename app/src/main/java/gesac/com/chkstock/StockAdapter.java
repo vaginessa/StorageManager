@@ -7,12 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import gesac.com.R;
 import gesac.com.scanbag.model.Item;
+import gesac.com.uitity.WarnSPlayer;
 
 /**
  * Created by GE11522 on 2017/5/23.
@@ -44,15 +47,42 @@ public class StockAdapter extends BaseAdapter {
         return position;
     }
 
+    public List<Item> getItemList() {
+        return itemList;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewDataBinding binding = null;
-        if (convertView == null){
-            binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.chk_itemlist,parent,false);
-        }else {
+        ViewDataBinding binding;
+        if (convertView == null) {
+            binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.chk_itemlist, parent, false);
+            convertView = binding.getRoot();
+        } else {
             binding = DataBindingUtil.getBinding(convertView);
         }
-        binding.setVariable(variableId,itemList.get(position));
-        return binding.getRoot();
+        ((TextView)(convertView.findViewById(R.id.itemqty_tv))).setText(itemList.get(position).getItemqty());
+        binding.setVariable(variableId, itemList.get(position));
+
+        return convertView;
+    }
+
+    public void removeItem(int position) {
+        itemList.remove(position);
+        notifyDataSetChanged();
+    }
+
+    public void cutItemqty(int position, String i) {
+        if (Integer.parseInt(itemList.get(position).getItemqty()) >= Integer.parseInt(i))
+            itemList.get(position).setItemqty(String.valueOf
+                    (Integer.parseInt(itemList.get(position).getItemqty()) - Integer.parseInt(i)
+                    )
+            );
+        else WarnSPlayer.playsound(context,R.raw.error);
+        notifyDataSetChanged();
+    }
+
+    public void swapItem(int s, int e) {
+        Collections.swap(itemList, s, e);
+        notifyDataSetChanged();
     }
 }

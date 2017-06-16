@@ -1,6 +1,7 @@
 package gesac.com.uitity;
 
 import android.content.Context;
+import android.view.WindowManager;
 
 import dmax.dialog.SpotsDialog;
 
@@ -18,6 +19,7 @@ public class LoadDialog {
                     spotsdialog = new SpotsDialog(context, msg);
             }
         }
+        spotsdialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
         spotsdialog.show();
     }
 

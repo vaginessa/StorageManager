@@ -76,4 +76,14 @@ public class Bag implements IBag {
         this.pcthv = pcthv;
     }
 
+    @Override
+    public boolean equals(IBag bag) {
+        return this.getPctid().equalsIgnoreCase(bag.getPctid())
+                && this.getPctbc().equalsIgnoreCase(bag.getPctbc())
+                && this.getPctqlty().equalsIgnoreCase(bag.getPctqlty())
+                && this.getPcttol().equalsIgnoreCase(bag.getPcttol())
+                && this.getPctqty().equalsIgnoreCase(bag.getPctqty())
+                && this.getPcthv().equalsIgnoreCase(bag.getPcthv());
+    }
+
 }
