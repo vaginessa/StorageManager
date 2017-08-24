@@ -9,8 +9,8 @@ import android.media.MediaPlayer;
 
 public class WarnSPlayer extends MediaPlayer {
 
-    public static void playsound(Context context, int resid){
-        MediaPlayer mp = MediaPlayer.create(context,resid);
+    public static void playsound(Context context, int resid) {
+        MediaPlayer mp = MediaPlayer.create(context, resid);
         mp.start();
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override

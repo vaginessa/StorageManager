@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gesac.com.R;
+import gesac.com.chkstock.HdwStockActivity;
 import gesac.com.chkstock.StockActivity;
 import gesac.com.databinding.ActivityHomeBinding;
 import gesac.com.home.model.Bluetooth;
@@ -23,6 +24,7 @@ import gesac.com.home.presenter.IBluettPersenter;
 import gesac.com.locstock.LocStockActivity;
 import gesac.com.pickitem.HdwPickActivity;
 import gesac.com.scanbag.view.ScanActivity;
+import gesac.com.splitbag.view.SplitActivity;
 import gesac.com.uitity.BHTApplication;
 
 public class HomeActivity extends Activity implements IBluettView {
@@ -67,20 +69,46 @@ public class HomeActivity extends Activity implements IBluettView {
                             }
                         })
                         .show();
-
             }
         });
         binding.chkHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(HomeActivity.this, StockActivity.class);
-                startActivity(it);
+                String[] params = {"产品盘点", "五金盘点"};
+                new AlertDialog.Builder(HomeActivity.this)
+                        .setItems(params, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent it;
+                                switch (which) {
+                                    case 0:
+                                        it = new Intent(HomeActivity.this, StockActivity.class);
+                                        it.putExtra("type",0);
+                                        startActivity(it);
+                                        break;
+                                    case 1:
+                                        it = new Intent(HomeActivity.this, HdwStockActivity.class);
+                                        it.putExtra("type",1);
+                                        startActivity(it);
+                                        break;
+                                }
+                            }
+                        })
+                        .show();
             }
         });
         binding.locHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(HomeActivity.this, LocStockActivity.class);
+                startActivity(it);
+            }
+        });
+
+        binding.pickHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(HomeActivity.this, SplitActivity.class);
                 startActivity(it);
             }
         });

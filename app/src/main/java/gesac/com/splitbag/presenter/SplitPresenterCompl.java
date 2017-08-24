@@ -8,9 +8,9 @@ import android.os.Looper;
 
 import java.util.Set;
 
-import gesac.com.splitbag.model.Bag;
 import gesac.com.splitbag.model.IBag;
 import gesac.com.splitbag.view.ISplitView;
+import gesac.com.uitity.CodeUtil;
 import zpSDK.zpSDK.zpSDK;
 
 /**
@@ -31,21 +31,8 @@ public class SplitPresenterCompl implements ISplitPresenter {
     }
 
     public IBag subString(String str) {
-        if (!str.isEmpty()) {
-            String[] sourceStrArray = str.split(",,");
-            try {
-                iBag = new Bag(sourceStrArray[0].replaceAll(",", ""),
-                        sourceStrArray[1].replaceAll(",", ""),
-                        sourceStrArray[2].replaceAll(",", ""),
-                        sourceStrArray[3].replaceAll(",", ""),
-                        String.valueOf((int) Math.round(Double.parseDouble(sourceStrArray[5].replaceAll(",", "")))),
-                        sourceStrArray[6].replaceAll(",", ""));
-            } catch (Exception e) {
-                iSplitView.clearEdt();
-                return null;
-            }
-            iSplitView.fillEdt(iBag);
-        }
+        iBag = CodeUtil.subCode(str);
+        iSplitView.fillEdt(iBag);
         return iBag;
     }
 
@@ -108,16 +95,11 @@ public class SplitPresenterCompl implements ISplitPresenter {
             iSplitView.closeStatbox();
             return;
         } else {
-
             zpSDK.TextPosWinStyle = false;
             zpSDK.zp_draw_text_ex(2, 2.5, iBag.getPctid(), "黑体", 3, 0, true, false, false);
             zpSDK.zp_draw_text_ex(40, 2.5, iBag.getPctbc(), "黑体", 3, 0, true, false, false);
             zpSDK.zp_draw_text_ex(25, 15, divnum, "黑体", 6.0, 0, true, false, false);
-            String str = "," + iBag.getPctid() + ",,"
-                    + iBag.getPcttol() + ",,"
-                    + iBag.getPctqlty() + ",,"
-                    + iBag.getPctbc() + ",,,," + divnum
-                    + ".0000,," + iBag.getPcthv() + ",";
+            String str = CodeUtil.initCode(iBag, divnum);
             zpSDK.zp_draw_barcode2d(40, 20, str, zpSDK.BARCODE2D_TYPE.BARCODE2D_DATAMATRIX, 3, 3, 90);
 
             zpSDK.zp_page_print(false);
@@ -155,12 +137,7 @@ public class SplitPresenterCompl implements ISplitPresenter {
             zpSDK.zp_draw_text_ex(2, 2.5, iBag.getPctid(), "黑体", 3, 0, true, false, false);
             zpSDK.zp_draw_text_ex(40, 2.5, iBag.getPctbc(), "黑体", 3, 0, true, false, false);
             zpSDK.zp_draw_text_ex(25, 15, (Integer.parseInt(iBag.getPctqty()) - Integer.parseInt(divnum)) + "", "黑体", 6.0, 0, true, false, false);
-            String str = "," + iBag.getPctid()
-                    + ",," + iBag.getPcttol()
-                    + ",," + iBag.getPctqlty()
-                    + ",," + iBag.getPctbc() + ",,,,"
-                    + (Integer.parseInt(iBag.getPctqty()) - Integer.parseInt(divnum))
-                    + ".0000,," + iBag.getPcthv() + ",";
+            String str = CodeUtil.initCode(iBag,(Integer.parseInt(iBag.getPctqty()) - Integer.parseInt(divnum)) + "");
             zpSDK.zp_draw_barcode2d(40, 20, str, zpSDK.BARCODE2D_TYPE.BARCODE2D_DATAMATRIX, 3, 3, 90);
 
             zpSDK.zp_page_print(false);
@@ -189,23 +166,8 @@ public class SplitPresenterCompl implements ISplitPresenter {
         iSplitView.closeStatbox();
     }
 
-    public boolean initBag(IBag iBag) {
-        this.iBag = iBag;
-        return true;
-    }
-
-    @Override
-    public String initCode(String divnum) {
-        String str = new String();
-        str = "," + iBag.getPctid() + ",," + iBag.getPcttol() + ",," + iBag.getPctqlty() + ",," + iBag.getPctbc() + ",,,," + divnum
-                + ".0000,," + iBag.getPcthv() + ",";
-        return str;
-    }
-
     @Override
     public void doPrint(String divnum) {
-        String sstr1 = initCode(divnum);
-        String sstr2 = initCode(Integer.parseInt(iBag.getPctqty()) - Integer.parseInt(divnum) + "");
 
         //TODO 打印
         if (!finBDAddress())

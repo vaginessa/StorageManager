@@ -1,17 +1,14 @@
 package gesac.com.pickitem;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -30,14 +27,18 @@ import gesac.com.uitity.WarnSPlayer;
  */
 
 public class ItemAdapter extends BaseAdapter {
+    private final String  TAG = "ItemAdapter debug";
     private Context context;
     private int variableId;
     private List<Item> itemList = new ArrayList<>();
+    private int type;
+
+    private IBag iBag = null;
 
     public ItemAdapter(Context context, int variableId, List<Item> itemList) {
         this.context = context;
         this.variableId = variableId;
-        this.itemList.addAll(itemList);
+        this.itemList = itemList;
     }
 
     /**
@@ -100,7 +101,6 @@ public class ItemAdapter extends BaseAdapter {
         } else {
             binding = DataBindingUtil.getBinding(convertView);
         }
-
         binding.setVariable(variableId, itemList.get(position));
         binding.setVariable(BR.onPickBtClickListener, new View.OnClickListener() {
             /**
@@ -110,40 +110,19 @@ public class ItemAdapter extends BaseAdapter {
              */
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder aldg = new AlertDialog.Builder(context);
-                final View view = LayoutInflater.from(context).inflate(R.layout.splitdialog, parent,false);
-                final TextView tv = (TextView) view.findViewById(R.id.num);
-                final EditText et = (EditText) view.findViewById(R.id.divnum);
-                tv.setText(itemList.get(position).getItemqty());
-                aldg.setCancelable(false)
-                        .setTitle("拆包")
-                        .setView(v);
-                aldg.setPositiveButton("打印", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String div = et.getText().toString();
-                        if (!div.isEmpty()) {
-                            PrintAsync pasnc = new PrintAsync();
-                            pasnc.execute(div, itemList.get(position));
-                            pasnc.setAsyncRespones(new AsyncRespones() {
-                                @Override
-                                public void onDataReceivedSuccess(int result) {
-                                    if (result == 0) removeItem(position);
-                                }
-                            });
-                            LoadDialog.showDialog(context, "打印中");
-                        } else
-                            Toast.makeText(context, "请输入拆分数量", Toast.LENGTH_SHORT).show();
-                    }
-
-                })
-                        .setNegativeButton("取消", null)
-                        .setCancelable(false)
-                        .create()
-                        .show();
+                if (iBag != null) {
+                    PrintAsync pasnc = new PrintAsync();
+                    pasnc.execute(itemList.get(position));
+                    pasnc.setAsyncRespones(new AsyncRespones() {
+                        @Override
+                        public void onDataReceivedSuccess(int result) {
+                            if (result == 0) removeItem(position);
+                        }
+                    });
+                    LoadDialog.showDialog(context, "打印中");
+                } else Toast.makeText(context, "请先扫码", Toast.LENGTH_SHORT).show();
             }
         });
-
         return convertView;
     }
 
@@ -152,10 +131,31 @@ public class ItemAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public IBag getiBag() {
+        return iBag;
+    }
+
+    public void setiBag(IBag iBag) {
+        this.iBag = iBag;
+    }
+
+    public void setIn(int position) {
+        itemList.get(position).setIsin(position);
+        Log.i(TAG, "setIn: " + itemList.get(position).getIsin());
+        notifyDataSetChanged();
+    }
+
     private interface AsyncRespones {
         void onDataReceivedSuccess(int result);
     }
-
 
     class PrintAsync extends AsyncTask<Object, Integer, Integer> {
 
@@ -183,7 +183,7 @@ public class ItemAdapter extends BaseAdapter {
         protected Integer doInBackground(Object... objects) {
             int result = 9999;
             try {
-                result = PrintUtil.doPrint((String) objects[0], (IBag) objects[1]);
+                result = PrintUtil.doPickPrint(getType(), "0", objects[0]);
             } catch (Exception e) {
                 e.printStackTrace();
             }

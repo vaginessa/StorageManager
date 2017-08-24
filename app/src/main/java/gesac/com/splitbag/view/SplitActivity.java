@@ -86,13 +86,14 @@ public class SplitActivity extends Activity implements ISplitView {
         if (keyCode == KeyEvent.KEYCODE_F8) {
             ecode.postInvalidate();
             codestr = ecode.getText().toString();
-            Log.i("message", "onKeyDown: " + codestr);
-            iSplitPresenter.subString(codestr);
+            if (!codestr.isEmpty()) {
+                Log.i("message", "onKeyDown: " + codestr);
+                iSplitPresenter.subString(codestr);
+            }
             return super.onKeyUp(keyCode, event);
         }
         return super.onKeyUp(keyCode, event);
     }
-
 
     private void closeInputMethod() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

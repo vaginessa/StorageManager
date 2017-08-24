@@ -7,7 +7,7 @@ package gesac.com.splitbag.model;
 public class Bag implements IBag {
     String pctid, pcttol, pctqlty, pctbc, pctqty, pcthv;
 
-    public Bag(String pctid, String pcttol, String pctqlty, String pctbc, String pctqty, String pcthv) {
+    public Bag(String pctid, String pctqlty, String pcttol, String pctbc, String pctqty, String pcthv) {
         this.pctid = pctid;
         this.pcttol = pcttol;
         this.pctqlty = pctqlty;

@@ -79,7 +79,7 @@ public class HdwPickActivity extends Activity {
                                 item.getPrimitiveProperty("itemtol").toString(),
                                 item.getPrimitiveProperty("itembc").toString(),
                                 item.getPrimitiveProperty("itemseri").toString(),
-                                item.getPrimitiveProperty("itemqty").toString(),
+                                item.getPrimitiveProperty("itemqty").toString().replaceAll("-", ""),
                                 item.getPrimitiveProperty("itemrqty").toString(),
                                 item.getPrimitiveProperty("itemst").toString(),
                                 item.getPrimitiveProperty("itemslc").toString()));
@@ -112,5 +112,4 @@ public class HdwPickActivity extends Activity {
             LoadDialog.cancelDialog();
         }
     }
-
 }

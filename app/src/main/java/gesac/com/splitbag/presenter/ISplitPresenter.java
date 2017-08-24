@@ -15,7 +15,5 @@ public interface ISplitPresenter {
 
     void Print1(String divnum);
 
-    String initCode(String divnum);
-
     void doPrint(String divnum);
 }

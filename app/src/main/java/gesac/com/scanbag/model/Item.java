@@ -1,8 +1,7 @@
 package gesac.com.scanbag.model;
 
 import android.databinding.BaseObservable;
-import android.view.View;
-import android.widget.Toast;
+
 
 /**
  * Created by GE11522 on 2017/4/14.
@@ -10,6 +9,7 @@ import android.widget.Toast;
 public class Item extends BaseObservable {
     String itemid, itemqlty, itemtol, itembc, itemseri, itemqty, itemwt, itemst, itemslc;
     int isin;
+    String itemtqty;
 
     public Item(String itemid, String itemqlty, String itemtol, String itembc, String itemseri, String itemqty, String itemwt, String itemst, String itemslc) {
         this.itemid = itemid; //物料编号
@@ -21,7 +21,8 @@ public class Item extends BaseObservable {
         this.itemwt = itemwt; //重量
         this.itemst = itemst; //仓库
         this.itemslc = itemslc; //库位
-        isin = 0;
+        this.isin = -1;
+        this.itemtqty = itemqty;
     }
 
     public Item() {
@@ -107,9 +108,11 @@ public class Item extends BaseObservable {
         this.isin = isin;
     }
 
-    public void onPickClick(View v) {
-        Toast.makeText(v.getContext(), getItemid(), Toast.LENGTH_SHORT).show();
-
+    public String getItemtqty() {
+        return itemtqty;
     }
 
+    public void setItemtqty(String itemtqty) {
+        this.itemtqty = itemtqty;
+    }
 }

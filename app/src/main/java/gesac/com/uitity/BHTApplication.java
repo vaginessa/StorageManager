@@ -15,14 +15,14 @@ public class BHTApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-        bhtaddr = null;
+        bhtaddr = "";
     }
 
-    public  String getBhtaddr() {
+    public String getBhtaddr() {
         return bhtaddr;
     }
 
-    public  void setBhtstr(String bhtaddr) {
+    public void setBhtstr(String bhtaddr) {
         this.bhtaddr = bhtaddr;
     }
 }

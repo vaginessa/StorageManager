@@ -1,8 +1,5 @@
 package gesac.com.uitity;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import gesac.com.R;
 
@@ -30,7 +30,7 @@ public class StatusBox {
 	{
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		dialogView = inflater.inflate(R.layout.statusbox, null, false);
-		dialogView.setBackgroundResource(R.layout.statusbox_shape);
+		dialogView.setBackgroundResource(R.drawable.statusbox_shape);
 		popupWindow = new PopupWindow(dialogView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);//创建PopupWindow实例
 		BoxParent = parent;
 		ParentContext = context;

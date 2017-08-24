@@ -6,10 +6,9 @@ import android.content.Intent;
 
 import java.util.Set;
 
-import gesac.com.scanbag.model.IJournal;
 import gesac.com.scanbag.view.IItemVIew;
-import gesac.com.splitbag.model.Bag;
 import gesac.com.splitbag.model.IBag;
+import gesac.com.uitity.CodeUtil;
 import zpSDK.zpSDK.zpSDK;
 
 /**
@@ -25,42 +24,6 @@ public class ItemPresenterCompl implements IItemPresenter {
     public ItemPresenterCompl(IItemVIew iItemVIew) {
         this.iItemVIew = iItemVIew;
         SelectedBDAddress = new String();
-    }
-
-    @Override
-    public Integer isInJour(IBag iBag, IJournal ijournal) {
-        for (int i = 0; i < ijournal.getItemlist().size(); i++) {
-            if (ijournal.getItemlist().get(i).getItemid().equalsIgnoreCase(iBag.getPctid())
-                    &&ijournal.getItemlist().get(i).getItembc().equalsIgnoreCase(iBag.getPctbc())
-                    && ijournal.getItemlist().get(i).getItemqlty().equalsIgnoreCase(iBag.getPctqlty())
-                    && ijournal.getItemlist().get(i).getItemtol().equalsIgnoreCase(iBag.getPcttol())
-                    ) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public IBag subString(String str) {
-        String[] sourceStrArray = str.split(",,");
-        try {
-            iBag = new Bag(sourceStrArray[0].replaceAll(",", ""),
-                    sourceStrArray[1].replaceAll(",", ""),
-                    sourceStrArray[2].replaceAll(",", ""),
-                    sourceStrArray[3].replaceAll(",", ""),
-                    String.valueOf((int) Math.round(Double.parseDouble(sourceStrArray[5].replaceAll(",", "")))),
-                    sourceStrArray[6].replaceAll(",", ""));
-//        } catch (ArrayIndexOutOfBoundsException e) {
-//            iItemVIew.showAlert("条码错误！");
-//            return null;
-//        }catch (NumberFormatException e){
-//            iItemVIew.showAlert("条码错误！");
-//            return null;
-        } catch (Exception e) {
-            iItemVIew.showAlert("条码错误！");
-            return null;
-        }
-        return iBag;
     }
 
     public String finBDAddress() {
@@ -120,11 +83,7 @@ public class ItemPresenterCompl implements IItemPresenter {
             zpSDK.zp_draw_text_ex(2, 2.5, iBag.getPctid(), "黑体", 3, 0, true, false, false);
             zpSDK.zp_draw_text_ex(40, 2.5, iBag.getPctbc(), "黑体", 3, 0, true, false, false);
             zpSDK.zp_draw_text_ex(25, 15, divnum, "黑体", 6.0, 0, true, false, false);
-            String str = "," + iBag.getPctid() + ",,"
-                    + iBag.getPcttol() + ",,"
-                    + iBag.getPctqlty() + ",,"
-                    + iBag.getPctbc() + ",,,," + divnum
-                    + ".0000,," + iBag.getPcthv() + ",";
+            String str = CodeUtil.initCode(iBag, divnum);
             zpSDK.zp_draw_barcode2d(40, 20, str, zpSDK.BARCODE2D_TYPE.BARCODE2D_DATAMATRIX, 3, 3, 90);
 
             zpSDK.zp_page_print(false);
@@ -157,12 +116,7 @@ public class ItemPresenterCompl implements IItemPresenter {
             zpSDK.zp_draw_text_ex(2, 2.5, iBag.getPctid(), "黑体", 3, 0, true, false, false);
             zpSDK.zp_draw_text_ex(40, 2.5, iBag.getPctbc(), "黑体", 3, 0, true, false, false);
             zpSDK.zp_draw_text_ex(25, 15, (Integer.parseInt(iBag.getPctqty()) - Integer.parseInt(divnum)) + "", "黑体", 6.0, 0, true, false, false);
-            String str = "," + iBag.getPctid()
-                    + ",," + iBag.getPcttol()
-                    + ",," + iBag.getPctqlty()
-                    + ",," + iBag.getPctbc() + ",,,,"
-                    + (Integer.parseInt(iBag.getPctqty()) - Integer.parseInt(divnum))
-                    + ".0000,," + iBag.getPcthv() + ",";
+            String str = CodeUtil.initCode(iBag,(Integer.parseInt(iBag.getPctqty()) - Integer.parseInt(divnum)) + "");
             zpSDK.zp_draw_barcode2d(40, 20, str, zpSDK.BARCODE2D_TYPE.BARCODE2D_DATAMATRIX, 3, 3, 90);
 
             zpSDK.zp_page_print(false);
@@ -185,14 +139,6 @@ public class ItemPresenterCompl implements IItemPresenter {
         }
         zpSDK.zp_close();
         return 0;//"打印成功";
-    }
-
-    @Override
-    public String initCode(String divnum) {
-        String str = new String();
-        str = "," + iBag.getPctid() + ",," + iBag.getPcttol() + ",," + iBag.getPctqlty() + ",," + iBag.getPctbc() + ",,,," + divnum
-                + ".0000,," + iBag.getPcthv() + ",";
-        return str;
     }
 
     @Override

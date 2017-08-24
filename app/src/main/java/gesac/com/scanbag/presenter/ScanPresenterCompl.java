@@ -17,7 +17,6 @@ import gesac.com.scanbag.model.IJournal;
 import gesac.com.scanbag.model.Item;
 import gesac.com.scanbag.model.Journal;
 import gesac.com.scanbag.view.IScanView;
-import gesac.com.splitbag.model.IBag;
 
 /**
  * Created by GE11522 on 2017/4/18.
@@ -25,15 +24,9 @@ import gesac.com.splitbag.model.IBag;
 
 public class ScanPresenterCompl implements IScanPresenter {
     IScanView iScanView;
-    IBag iBag;
 
     public ScanPresenterCompl(IScanView iScanView) {
         this.iScanView = iScanView;
-    }
-
-    @Override
-    public boolean doCheck(Item item) {
-        return false;
     }
 
     @Override
@@ -86,7 +79,7 @@ public class ScanPresenterCompl implements IScanPresenter {
                             item.getPrimitiveProperty("itemtol").toString(),
                             item.getPrimitiveProperty("itembc").toString(),
                             item.getPrimitiveProperty("itemseri").toString(),
-                            item.getPrimitiveProperty("itemqty").toString(),
+                            item.getPrimitiveProperty("itemqty").toString().replaceAll("-",""),
                             item.getPrimitiveProperty("itemrqty").toString(),
                             item.getPrimitiveProperty("itemst").toString(),
                             item.getPrimitiveProperty("itemslc").toString()));

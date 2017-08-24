@@ -26,6 +26,7 @@ import gesac.com.uitity.LoadDialog;
 import gesac.com.uitity.WarnSPlayer;
 
 public class ItemActivity extends Activity implements IItemVIew {
+    private static String TAG = "ItemActivity debug";
     private EditText mItemstr;
     private TextView mJourid;
     private ListView mItemlist;
@@ -42,14 +43,16 @@ public class ItemActivity extends Activity implements IItemVIew {
         setContentView(R.layout.activity_item);
         Intent it = getIntent();
         iJournal = new Gson().fromJson(it.getStringExtra("jour"), Journal.class);
-        Log.d("debug", String.valueOf(iJournal.getItemlist().size()));
+        Log.d(TAG, String.valueOf(iJournal.getItemlist().size()));
+        Log.d(TAG, iJournal.getJourid());
+
         iItemPresenter = new ItemPresenterCompl(this);
         bindViews();
     }
 
     private void bindViews() {
         mItemstr = (EditText) findViewById(R.id.itemstr_et);
-        mJourid = (TextView) findViewById(R.id.jourid);
+        mJourid = (TextView) findViewById(R.id.jourid_tv);
         mItemlist = (ListView) findViewById(R.id.itemlist);
         mJourid.setText(iJournal.getJourid());
 
@@ -63,7 +66,6 @@ public class ItemActivity extends Activity implements IItemVIew {
         if (keyCode == KeyEvent.KEYCODE_F8) {
             mItemstr.requestFocus();
             mItemstr.selectAll();
-            return super.onKeyDown(keyCode, event);
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -74,11 +76,12 @@ public class ItemActivity extends Activity implements IItemVIew {
             // 1、获取二维码2、拆分字符串3、匹配物料编号
             mItemstr.postInvalidate();
             strcode = mItemstr.getText().toString();
-            iBag = iItemPresenter.subString(strcode);
+            iBag = CodeUtil.subIBagCode(strcode);
             mItemstr.setText("");
             //TODO iBag与list比较
             if (iBag != null) {
-                int position = CodeUtil.isInItemls(iBag, iJournal.getItemlist());
+                int position = CodeUtil.isBgInItemls(iBag, iJournal.getItemlist());
+                Log.i(TAG, "onKeyUp: " + "position: " + position);
 //                int isin = 1;
                 if (position != -1) {
                     //TODO 若匹配则按钮可按

@@ -60,9 +60,8 @@ public class StockAdapter extends BaseAdapter {
         } else {
             binding = DataBindingUtil.getBinding(convertView);
         }
-        ((TextView)(convertView.findViewById(R.id.itemqty_tv))).setText(itemList.get(position).getItemqty());
+        ((TextView)(convertView.findViewById(R.id.itemqty_tv))).setText(itemList.get(position).getItemtqty());
         binding.setVariable(variableId, itemList.get(position));
-
         return convertView;
     }
 
@@ -77,7 +76,7 @@ public class StockAdapter extends BaseAdapter {
                     (Integer.parseInt(itemList.get(position).getItemqty()) - Integer.parseInt(i)
                     )
             );
-        else WarnSPlayer.playsound(context,R.raw.error);
+        else WarnSPlayer.playsound(context,R.raw.chkerror);
         notifyDataSetChanged();
     }
 

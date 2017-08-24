@@ -10,7 +10,6 @@
         <variable
             name="onPickBtClickListener"
             type="android.view.View.OnClickListener"></variable>
-
     </data>
 
     <AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -168,6 +167,7 @@
             android:layout_height="wrap_content"
             android:layout_x="248dp"
             android:layout_y="119dp"
+            android:enabled="@{item.isin == -1? false:true}"
             android:onClick="@{onPickBtClickListener}"
             android:text="拆包" />
     </AbsoluteLayout>

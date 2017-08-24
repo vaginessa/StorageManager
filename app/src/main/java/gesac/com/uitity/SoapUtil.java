@@ -30,8 +30,8 @@ public class SoapUtil {
         request.addProperty("password", "WJ82LYVu8fm+vdtIdA0yxA==");
         request.addProperty("dimain", "ge");
 
-
         //创建SoapSerializationEnvelope 对象，同时指定soap版本号(之前在wsdl中看到的)
+
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapSerializationEnvelope.VER12);
         envelope.bodyOut = request;//由于是发送请求，所以是设置bodyOut
         envelope.dotNet = true;//由于是.net开发的webservice，所以这里要设置为true
@@ -48,7 +48,12 @@ public class SoapUtil {
         } catch (XmlPullParserException e) {
             e.printStackTrace();
         }
-        SoapObject object = (SoapObject) envelope.bodyIn;
+        SoapObject object = null;
+        try {
+            object = (SoapObject) envelope.bodyIn;
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
         return object;
     }
 }

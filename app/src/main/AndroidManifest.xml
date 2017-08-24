@@ -29,7 +29,9 @@
         <activity android:name=".locstock.LocStockActivity" />
         <activity android:name=".chkstock.StockActivity" />
         <activity android:name=".pickitem.HdwPickActivity" />
-        <activity android:name=".pickitem.ItemActivity"></activity>
+        <activity android:name=".pickitem.ItemActivity" />
+        <activity android:name=".chkstock.HdwStockActivity" />
+        <activity android:name=".login.LoginActivity"></activity>
     </application>
 
 </manifest>
