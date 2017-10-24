@@ -2,7 +2,6 @@ package gesac.com.pickitem;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gesac.com.R;
-import gesac.com.scanbag.model.Journal;
+import gesac.com.databinding.JourlistBinding;
+import gesac.com.pickitem.model.Journal;
 
 /**
  * Created by GE11522 on 2017/6/13.
@@ -20,12 +20,10 @@ import gesac.com.scanbag.model.Journal;
 
 public class JourAdapter extends BaseAdapter {
     private Context context;
-    private int variableId;
     private List<Journal> jourList = new ArrayList<>();
 
-    public JourAdapter(Context context, int variableId, List<Journal> jourList) {
+    public JourAdapter(Context context, List<Journal> jourList) {
         this.context = context;
-        this.variableId = variableId;
         this.jourList.addAll(jourList);
     }
 
@@ -39,7 +37,6 @@ public class JourAdapter extends BaseAdapter {
         return jourList.get(position);
     }
 
-
     @Override
     public long getItemId(int position) {
         return position;
@@ -47,14 +44,14 @@ public class JourAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewDataBinding binding;
+        JourlistBinding binding;
         if (convertView == null) {
             binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.jourlist, parent, false);
             convertView = binding.getRoot();
         } else {
             binding = DataBindingUtil.getBinding(convertView);
         }
-        binding.setVariable(variableId, jourList.get(position));
+        binding.setJournal(jourList.get(position));
         return convertView;
     }
 }

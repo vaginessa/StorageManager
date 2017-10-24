@@ -1,22 +1,24 @@
 package gesac.com.splitbag.view;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import gesac.com.R;
+import gesac.com.model.RespPOJO;
 import gesac.com.splitbag.model.IBag;
 import gesac.com.splitbag.presenter.ISplitPresenter;
 import gesac.com.splitbag.presenter.SplitPresenterCompl;
+import gesac.com.uitity.Alertdlg;
+import gesac.com.uitity.CodeUtil;
+import gesac.com.uitity.PrintUtil;
 import gesac.com.uitity.StatusBox;
 
 public class SplitActivity extends Activity implements ISplitView {
@@ -26,6 +28,8 @@ public class SplitActivity extends Activity implements ISplitView {
     private String spctnum = "", spctdinum = "";
     private Button bprint;
     private String codestr;
+    private int type;
+    private IBag bag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +68,12 @@ public class SplitActivity extends Activity implements ISplitView {
                 spctdinum = epctdinum.getText().toString();
                 spctnum = epctnum.getText().toString();
                 if (!spctdinum.isEmpty() && !spctnum.isEmpty()) {
-                    iSplitPresenter.doPrint(spctdinum);
+                    showStatbox("正在打印......");
+                    RespPOJO<Object> result = PrintUtil.doPickPrint(type, spctdinum, bag);
+                    closeStatbox();
+                    if (result.getCode() != 0)
+                        Alertdlg.showDialog(SplitActivity.this, result.getMsg());
+//                    iSplitPresenter.doPrint(spctdinum);
                 } else
                     Toast.makeText(SplitActivity.this, "请扫码并输入拆分数量", Toast.LENGTH_SHORT).show();
             }
@@ -88,19 +97,11 @@ public class SplitActivity extends Activity implements ISplitView {
             codestr = ecode.getText().toString();
             if (!codestr.isEmpty()) {
                 Log.i("message", "onKeyDown: " + codestr);
-                iSplitPresenter.subString(codestr);
+                bag = iSplitPresenter.subString(codestr);
+                type = CodeUtil.whichType(codestr);
             }
-            return super.onKeyUp(keyCode, event);
         }
         return super.onKeyUp(keyCode, event);
-    }
-
-    private void closeInputMethod() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        boolean isOpen = imm.isActive();
-        if (isOpen) {
-            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);//没有显示则显示
-        }
     }
 
     @Override

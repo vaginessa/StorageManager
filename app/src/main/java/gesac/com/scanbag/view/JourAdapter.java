@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import gesac.com.R;
-import gesac.com.scanbag.model.Journal;
+import gesac.com.pickitem.model.Journal;
 
 /**
  * Created by GE11522 on 2017/4/18.

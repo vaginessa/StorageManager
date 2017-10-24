@@ -13,9 +13,9 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
-import gesac.com.scanbag.model.IJournal;
-import gesac.com.scanbag.model.Item;
-import gesac.com.scanbag.model.Journal;
+import gesac.com.pickitem.model.IJournal;
+import gesac.com.pickitem.model.Item;
+import gesac.com.pickitem.model.Journal;
 import gesac.com.scanbag.view.IScanView;
 
 /**

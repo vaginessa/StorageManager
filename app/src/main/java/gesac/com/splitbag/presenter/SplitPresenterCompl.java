@@ -20,7 +20,7 @@ import zpSDK.zpSDK.zpSDK;
 public class SplitPresenterCompl implements ISplitPresenter {
     public static BluetoothAdapter myBluetoothAdapter;
     public String SelectedBDAddress;
-    ISplitView iSplitView;
+    public ISplitView iSplitView;
     IBag iBag;
     Handler handler;
 
@@ -168,7 +168,6 @@ public class SplitPresenterCompl implements ISplitPresenter {
 
     @Override
     public void doPrint(String divnum) {
-
         //TODO 打印
         if (!finBDAddress())
             iSplitView.showToast("请连接打印机");

@@ -1,4 +1,4 @@
-package gesac.com.pickitem;
+package gesac.com.pickitem.hardware;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -16,7 +16,8 @@ import java.util.List;
 
 import gesac.com.BR;
 import gesac.com.R;
-import gesac.com.scanbag.model.Item;
+import gesac.com.model.RespPOJO;
+import gesac.com.pickitem.model.Item;
 import gesac.com.splitbag.model.IBag;
 import gesac.com.uitity.LoadDialog;
 import gesac.com.uitity.PrintUtil;
@@ -27,7 +28,7 @@ import gesac.com.uitity.WarnSPlayer;
  */
 
 public class ItemAdapter extends BaseAdapter {
-    private final String  TAG = "ItemAdapter debug";
+    private final String TAG = "ItemAdapter debug";
     private Context context;
     private int variableId;
     private List<Item> itemList = new ArrayList<>();
@@ -116,7 +117,7 @@ public class ItemAdapter extends BaseAdapter {
                     pasnc.setAsyncRespones(new AsyncRespones() {
                         @Override
                         public void onDataReceivedSuccess(int result) {
-                            if (result == 0) removeItem(position);
+                            if (result == 0) setSplit(position);
                         }
                     });
                     LoadDialog.showDialog(context, "打印中");
@@ -128,6 +129,11 @@ public class ItemAdapter extends BaseAdapter {
 
     public void removeItem(int position) {
         itemList.remove(position);
+        notifyDataSetChanged();
+    }
+
+    private void setSplit(int position) {
+        itemList.get(position).setSplit(true);
         notifyDataSetChanged();
     }
 
@@ -157,7 +163,7 @@ public class ItemAdapter extends BaseAdapter {
         void onDataReceivedSuccess(int result);
     }
 
-    class PrintAsync extends AsyncTask<Object, Integer, Integer> {
+    class PrintAsync extends AsyncTask<Object, Object, RespPOJO<Object>> {
 
         private AsyncRespones asyncRespones;
 
@@ -180,8 +186,8 @@ public class ItemAdapter extends BaseAdapter {
          * @see #publishProgress
          */
         @Override
-        protected Integer doInBackground(Object... objects) {
-            int result = 9999;
+        protected RespPOJO<Object> doInBackground(Object... objects) {
+            RespPOJO<Object> result = new RespPOJO<>();
             try {
                 result = PrintUtil.doPickPrint(getType(), "0", objects[0]);
             } catch (Exception e) {
@@ -191,40 +197,13 @@ public class ItemAdapter extends BaseAdapter {
         }
 
         @Override
-        protected void onPostExecute(Integer result) {
+        protected void onPostExecute(RespPOJO<Object> result) {
             super.onPostExecute(result);
-            asyncRespones.onDataReceivedSuccess(result);
-            String msg = "";
-            switch (result) {
-                case 0:
-                    msg = "打印成功";
-                    WarnSPlayer.playsound(context, R.raw.printscd);
-                    break;
-                case -1:
-                    msg = "打印失败！请检查与打印机的连接是否正常";
-                    WarnSPlayer.playsound(context, R.raw.printerr);
-                    break;
-                case 1:
-                    msg = "打印失败！打印机纸仓盖开";
-                    WarnSPlayer.playsound(context, R.raw.printerr);
-                    break;
-                case 2:
-                    msg = "打印失败！打印机缺纸";
-                    WarnSPlayer.playsound(context, R.raw.printerr);
-                    break;
-                case 3:
-                    msg = "创建打印页面失败";
-                    WarnSPlayer.playsound(context, R.raw.printerr);
-                    break;
-                case 4:
-                    msg = "打印失败！打印头过热";
-                    WarnSPlayer.playsound(context, R.raw.printerr);
-                    break;
-                case 5:
-                    msg = "请连接打印机";
-                    WarnSPlayer.playsound(context, R.raw.printerr);
-                    break;
-            }
+            asyncRespones.onDataReceivedSuccess(result.getCode());
+            String msg = result.getMsg();
+            if (result.getCode() == 0)
+                WarnSPlayer.playsound(context, R.raw.printscd);
+            else WarnSPlayer.playsound(context, R.raw.printerr);
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
             LoadDialog.cancelDialog();
         }

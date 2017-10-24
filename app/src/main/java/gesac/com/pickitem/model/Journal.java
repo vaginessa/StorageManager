@@ -1,4 +1,4 @@
-package gesac.com.scanbag.model;
+package gesac.com.pickitem.model;
 
 import android.databinding.BaseObservable;
 

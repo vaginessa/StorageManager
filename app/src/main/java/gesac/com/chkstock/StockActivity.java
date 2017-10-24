@@ -21,7 +21,7 @@ import java.util.Map;
 
 import gesac.com.R;
 import gesac.com.databinding.ActivityStockBinding;
-import gesac.com.scanbag.model.Item;
+import gesac.com.pickitem.model.Item;
 import gesac.com.uitity.CodeUtil;
 import gesac.com.uitity.LoadDialog;
 import gesac.com.uitity.SoapUtil;

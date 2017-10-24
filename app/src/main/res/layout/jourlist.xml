@@ -4,7 +4,7 @@
     <data>
         <variable
             name="journal"
-            type="gesac.com.scanbag.model.Journal"></variable>
+            type="gesac.com.pickitem.model.Journal"></variable>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -1,39 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <data>
-        <variable
-            name="itemadapter"
-            type="gesac.com.pickitem.ItemAdapter"></variable>
-    </data>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp"
-    >
 
-    <TextView
-        android:id="@+id/jourid_tv"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        />
+    <data></data>
 
-    <EditText
-        android:id="@+id/itemstr_et"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:singleLine="true"/>
-    <ListView
-        android:id="@+id/itemlist"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:scrollbars="vertical"
-        android:fadeScrollbars="false"
-        app:adapter="@{itemadapter}"
-        />
-</LinearLayout>
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/jourid_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="30dp" />
+
+        <EditText
+            android:id="@+id/itemstr_et"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:singleLine="true" />
+
+        <ListView
+            android:id="@+id/itemlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:fadeScrollbars="false"
+            android:scrollbars="vertical" />
+    </LinearLayout>
 </layout>

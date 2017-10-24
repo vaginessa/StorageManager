@@ -4,7 +4,9 @@
         <variable
             name="qty"
             type="String"></variable>
-
+        <variable
+            name="scanqty"
+            type="String"></variable>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,18 +17,31 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="数量：" />
+                android:text="总数量：" />
 
             <TextView
                 android:id="@+id/num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{qty}"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="扫描数量：" />
+
+            <TextView
+                android:id="@+id/scannum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{scanqty}"/>
         </LinearLayout>
 
         <LinearLayout

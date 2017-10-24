@@ -3,7 +3,7 @@
     <data>
         <variable
             name="item"
-            type="gesac.com.scanbag.model.Item"></variable>
+            type="gesac.com.pickitem.model.Item"></variable>
     </data>
 
     <AbsoluteLayout

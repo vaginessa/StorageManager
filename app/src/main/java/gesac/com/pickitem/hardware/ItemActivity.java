@@ -1,4 +1,4 @@
-package gesac.com.pickitem;
+package gesac.com.pickitem.hardware;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import gesac.com.BR;
 import gesac.com.R;
 import gesac.com.databinding.ActivityItemBinding;
-import gesac.com.scanbag.model.Journal;
+import gesac.com.pickitem.model.Journal;
 import gesac.com.uitity.CodeUtil;
 import gesac.com.uitity.WarnSPlayer;
 
@@ -38,7 +38,7 @@ public class ItemActivity extends Activity {
         binding.itemstrEt.setInputType(InputType.TYPE_NULL);
         binding.jouridTv.setText(journal.getJourid());
         adapter = new ItemAdapter(this, BR.item, journal.getItemlist());
-        binding.setItemadapter(adapter);
+        binding.itemlist.setAdapter(adapter);
     }
 
     @Override

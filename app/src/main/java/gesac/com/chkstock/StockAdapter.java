@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 import gesac.com.R;
-import gesac.com.scanbag.model.Item;
+import gesac.com.pickitem.model.Item;
 import gesac.com.uitity.WarnSPlayer;
 
 /**
@@ -60,7 +60,7 @@ public class StockAdapter extends BaseAdapter {
         } else {
             binding = DataBindingUtil.getBinding(convertView);
         }
-        ((TextView)(convertView.findViewById(R.id.itemqty_tv))).setText(itemList.get(position).getItemtqty());
+        ((TextView) (convertView.findViewById(R.id.itemqty_tv))).setText(itemList.get(position).getItemtqty());
         binding.setVariable(variableId, itemList.get(position));
         return convertView;
     }
@@ -76,7 +76,7 @@ public class StockAdapter extends BaseAdapter {
                     (Integer.parseInt(itemList.get(position).getItemqty()) - Integer.parseInt(i)
                     )
             );
-        else WarnSPlayer.playsound(context,R.raw.chkerror);
+        else WarnSPlayer.playsound(context, R.raw.chkerror);
         notifyDataSetChanged();
     }
 

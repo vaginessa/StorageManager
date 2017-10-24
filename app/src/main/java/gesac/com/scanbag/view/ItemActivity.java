@@ -16,8 +16,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import gesac.com.R;
-import gesac.com.scanbag.model.IJournal;
-import gesac.com.scanbag.model.Journal;
+import gesac.com.pickitem.model.IJournal;
+import gesac.com.pickitem.model.Journal;
 import gesac.com.scanbag.presenter.IItemPresenter;
 import gesac.com.scanbag.presenter.ItemPresenterCompl;
 import gesac.com.splitbag.model.IBag;

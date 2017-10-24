@@ -1,4 +1,4 @@
-package gesac.com.pickitem;
+package gesac.com.pickitem.hardware;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,11 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import gesac.com.BR;
 import gesac.com.R;
 import gesac.com.databinding.ActivityHdwPickBinding;
-import gesac.com.scanbag.model.Item;
-import gesac.com.scanbag.model.Journal;
+import gesac.com.pickitem.JourAdapter;
+import gesac.com.pickitem.model.Item;
+import gesac.com.pickitem.model.Journal;
 import gesac.com.uitity.LoadDialog;
 import gesac.com.uitity.SoapUtil;
 
@@ -107,7 +107,7 @@ public class HdwPickActivity extends Activity {
         protected void onPostExecute(SoapObject s) {
             super.onPostExecute(s);
             journals = parseInfo(s);
-            jouradapter = new JourAdapter(HdwPickActivity.this, BR.journal, journals);
+            jouradapter = new JourAdapter(HdwPickActivity.this, journals);
             binding.setJouradapter(jouradapter);
             LoadDialog.cancelDialog();
         }

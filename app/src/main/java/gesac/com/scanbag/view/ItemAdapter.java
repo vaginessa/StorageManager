@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gesac.com.R;
-import gesac.com.scanbag.model.Item;
+import gesac.com.pickitem.model.Item;
 import gesac.com.scanbag.presenter.IItemPresenter;
 import gesac.com.uitity.LoadDialog;
 import gesac.com.uitity.WarnSPlayer;
@@ -106,28 +106,28 @@ public class ItemAdapter extends BaseAdapter {
                     tv.setText(itemlist.get(position).getItemqty());
                     aldg.setCancelable(false)
                             .setTitle("拆包")
-                            .setView(v);
-                    aldg.setPositiveButton("打印", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            String div = et.getText().toString();
+                            .setView(v)
+                            .setPositiveButton("打印", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    String div = et.getText().toString();
 //                            Map<String, String> map = new HashMap<>();
-                            if (!div.isEmpty()) {
+                                    if (!div.isEmpty()) {
 //                                map.put("div", div);
 //                                map.put("position", String.valueOf(position));
-                                splitBagTask sptask = new splitBagTask();
-                                sptask.execute(div);
-                                sptask.setOnAsyncRespones( new AsyncRespones() {
-                                    @Override
-                                    public void onDataReceivedSuccess(int result) {
-                                        if (result == 0) removeItem(position);
-                                    }
-                                });
-                                LoadDialog.showDialog(context, "打印中");
-                            } else
-                                Toast.makeText(context, "请输入拆分数量", Toast.LENGTH_SHORT).show();
-                        }
-                    })
+                                        splitBagTask sptask = new splitBagTask();
+                                        sptask.execute(div);
+                                        sptask.setOnAsyncRespones(new AsyncRespones() {
+                                            @Override
+                                            public void onDataReceivedSuccess(int result) {
+                                                if (result == 0) removeItem(position);
+                                            }
+                                        });
+                                        LoadDialog.showDialog(context, "打印中");
+                                    } else
+                                        Toast.makeText(context, "请输入拆分数量", Toast.LENGTH_SHORT).show();
+                                }
+                            })
                             .setNegativeButton("取消", null)
                             .setCancelable(false)
                             .create()

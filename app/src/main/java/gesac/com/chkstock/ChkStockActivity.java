@@ -16,7 +16,7 @@ import java.util.List;
 import gesac.com.BR;
 import gesac.com.R;
 import gesac.com.databinding.ActivityChkStockBinding;
-import gesac.com.scanbag.model.Item;
+import gesac.com.pickitem.model.Item;
 import gesac.com.splitbag.model.IBag;
 import gesac.com.uitity.CodeUtil;
 import gesac.com.uitity.WarnSPlayer;

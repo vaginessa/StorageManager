@@ -1,4 +1,4 @@
-package gesac.com.scanbag.model;
+package gesac.com.pickitem.model;
 
 import android.databinding.BaseObservable;
 
@@ -9,6 +9,7 @@ import android.databinding.BaseObservable;
 public class Item extends BaseObservable {
     String itemid, itemqlty, itemtol, itembc, itemseri, itemqty, itemwt, itemst, itemslc;
     int isin;
+    boolean split;
     String itemtqty;
 
     public Item(String itemid, String itemqlty, String itemtol, String itembc, String itemseri, String itemqty, String itemwt, String itemst, String itemslc) {
@@ -22,6 +23,7 @@ public class Item extends BaseObservable {
         this.itemst = itemst; //仓库
         this.itemslc = itemslc; //库位
         this.isin = -1;
+        this.split = false;
         this.itemtqty = itemqty;
     }
 
@@ -114,5 +116,36 @@ public class Item extends BaseObservable {
 
     public void setItemtqty(String itemtqty) {
         this.itemtqty = itemtqty;
+    }
+
+    public boolean isSplit() {
+        return split;
+    }
+
+    public void setSplit(boolean split) {
+        this.split = split;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Item item = (Item) o;
+
+        if (itemid != null ? !itemid.equals(item.itemid) : item.itemid != null) return false;
+        if (itemqlty != null ? !itemqlty.equals(item.itemqlty) : item.itemqlty != null)
+            return false;
+        if (itemtol != null ? !itemtol.equals(item.itemtol) : item.itemtol != null) return false;
+        return itembc != null ? itembc.equals(item.itembc) : item.itembc == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = itemid != null ? itemid.hashCode() : 0;
+        result = 31 * result + (itemqlty != null ? itemqlty.hashCode() : 0);
+        result = 31 * result + (itemtol != null ? itemtol.hashCode() : 0);
+        result = 31 * result + (itembc != null ? itembc.hashCode() : 0);
+        return result;
     }
 }
